@@ -1,0 +1,263 @@
+MySQL Shell 8.0.38
+
+Copyright (c) 2016, 2024, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mysql root@localhost:3306
+Creating a Classic session to 'root@localhost:3306'
+Please provide the password for 'root@localhost:3306': ********
+Save password for 'root@localhost:3306'? [Y]es/[N]o/Ne[v]er (default No): n
+Fetching global names for auto-completion... Press ^C to stop.
+Your MySQL connection id is 9
+Server version: 8.0.37 MySQL Community Server - GPL
+No default schema selected; type \use <schema> to set one.
+ MySQL  localhost:3306 ssl  SQL > use tbd_e2
+Default schema set to `tbd_e2`.
+Fetching global names, object names from `tbd_e2` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create table factura_de(
+                                       -> id int key auto_increment,
+                                       -> idproducto int not null,
+                                       -> id factura int not null,
+                                       -> cantidad int not ull,
+                                       -> constraint foreign key(idfactura)
+                                       -> references  factura(id) on delete cascade on update cascade);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'factura int not null,
+cantidad int not ull,
+constraint foreign key(idfactura)
+re' at line 4
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create table factura_de( id int key auto_increment, idproducto int not null, id factur int not null, cantidad int not ull, constraint foreign key(idfactura) references  factura(id) on delete cascade on update cascade);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'factur int not null, cantidad int not ull, constraint foreign key(idfactura) ref' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create table factura_de( id int key auto_increment, idproducto int not null, idfactura int not null, cantidad int not ull, constraint foreign key(idfactura) references  factura(id) on delete cascade on update cascade);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ull, constraint foreign key(idfactura) references  factura(id) on delete cascade' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create table factura_de( id int key auto_increment, idproducto int not null, idfactura int not null, cantidad int not null, constraint foreign key(idfactura) references  factura(id) on delete cascade on update cascade);
+ERROR: 3734 (HY000): Failed to add the foreign key constraint. Missing column 'id' for constraint 'factura_de_ibfk_1' in the referenced table 'factura'
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > show tables
+                                       -> ;
++------------------+
+| Tables_in_tbd_e2 |
++------------------+
+| cliente          |
+| factura          |
++------------------+
+2 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create table factura_de( id int key auto_increment, idproducto int not null, idfactura int not null, cantidad int not null, constraint foreign key(idfactura) references  factura(folio) on delete cascade on update cascade);
+Query OK, 0 rows affected (0.1051 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura;
++-------+-----------+
+| folio | idcliente |
++-------+-----------+
+|     1 |         2 |
+|     3 |         2 |
+|     4 |         2 |
+|     6 |         2 |
++-------+-----------+
+4 rows in set (0.0094 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > show tables ;
++------------------+
+| Tables_in_tbd_e2 |
++------------------+
+| cliente          |
+| factura          |
+| factura_de       |
++------------------+
+3 rows in set (0.0021 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > inster into factura_de(idproducto, idfactura, cantidad)
+                                       -> values(6,1,3),(1,3,4),(3,4,1);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inster into factura_de(idproducto, idfactura, cantidad)
+values(6,1,3),(1,3,4),(3' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into factura_de(idproducto, idfactura, cantidad) values(6,1,3),(1,3,4),(3,4,1);
+Query OK, 3 rows affected (0.0129 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura_de;
++----+------------+-----------+----------+
+| id | idproducto | idfactura | cantidad |
++----+------------+-----------+----------+
+|  1 |          6 |         1 |        3 |
+|  2 |          1 |         3 |        4 |
+|  3 |          3 |         4 |        1 |
++----+------------+-----------+----------+
+3 rows in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura where folio 6
+                                       -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '6' at line 1 MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura where folio= 6 ;
++-------+-----------+
+| folio | idcliente |
++-------+-----------+
+|     6 |         2 |
++-------+-----------+
+1 row in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from cliente where id = 3;
++----+--------+-----------+---------------+
+| id | nombre | apellidos | rfc           |
++----+--------+-----------+---------------+
+|  3 | jesus  | loya      | 1234567890123 |
++----+--------+-----------+---------------+
+1 row in set (0.0231 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > update cliente
+                                       -> set
+                                       -> id = 20
+                                       -> where id = 3;
+Query OK, 1 row affected (0.0144 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura;
++-------+-----------+
+| folio | idcliente |
++-------+-----------+
+|     1 |         2 |
+|     3 |         2 |
+|     4 |         2 |
+|     6 |         2 |
++-------+-----------+
+4 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > update cliente
+                                       -> set
+                                       -> id = 20
+                                       -> where id = 2;
+ERROR: 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`tbd_e2`.`factura`, CONSTRAINT `factura_ibfk_1` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`id`))
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from cliente where id = 20;
++----+--------+-----------+---------------+
+| id | nombre | apellidos | rfc           |
++----+--------+-----------+---------------+
+| 20 | jesus  | loya      | 1234567890123 |
++----+--------+-----------+---------------+
+1 row in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > delete from cliente where id = 20;
+Query OK, 1 row affected (0.0095 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select  * from factura_detalle;
+ERROR: 1146 (42S02): Table 'tbd_e2.factura_detalle' doesn't exist
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select  * from factura_dee;
+ERROR: 1146 (42S02): Table 'tbd_e2.factura_dee' doesn't exist
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select  * from factura_de;
++----+------------+-----------+----------+
+| id | idproducto | idfactura | cantidad |
++----+------------+-----------+----------+
+|  1 |          6 |         1 |        3 |
+|  2 |          1 |         3 |        4 |
+|  3 |          3 |         4 |        1 |
++----+------------+-----------+----------+
+3 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create table producto(
+                                       -> id int key auto_increment,
+                                       -> nombre varchar(50) not null,
+                                       -> precio decimal (10,2) not null;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > create table producto( id int key auto_increment, nombre varchar(50) not null, precio decimal (10,2) not null);
+Query OK, 0 rows affected (0.0345 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into producto(nombre, precio,)
+                                       -> values("elote",20),("nachos",50),("iphone",25);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')
+values("elote",20),("nachos",50),("iphone",25)' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into producto(nombre, precio,) values("elote",20),("nachos",50),("iphone",25);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') values("elote",20),("nachos",50),("iphone",25)' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into producto(nombre, precio,) values("elote",20),("nachos",50),("ihone",25);
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') values("elote",20),("nachos",50),("ihone",25)' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into producto(nombre, precio) values("elote",20),("nachos",50),("ihone",25);
+Query OK, 3 rows affected (0.0095 sec)
+
+Records: 3  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from_detalle;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from_detalle' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from_de;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from_de' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from producto;
++----+--------+--------+
+| id | nombre | precio |
++----+--------+--------+
+|  1 | elote  |  20.00 |
+|  2 | nachos |  50.00 |
+|  3 | ihone  |  25.00 |
++----+--------+--------+
+3 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > desc factura_de;
++------------+------+------+-----+---------+----------------+
+| Field      | Type | Null | Key | Default | Extra          |
++------------+------+------+-----+---------+----------------+
+| id         | int  | NO   | PRI | NULL    | auto_increment |
+| idproducto | int  | NO   |     | NULL    |                |
+| idfactura  | int  | NO   | MUL | NULL    |                |
+| cantidad   | int  | NO   |     | NULL    |                |
++------------+------+------+-----+---------+----------------+
+4 rows in set (0.0025 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura_de
+                                       -> add constraint foreign key(idproducto)
+                                       -> reference producto(id) on delete cascada
+                                       -> on update cascada;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'reference producto(id) on delete cascada
+on update cascada' at line 3
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura_de add constraint foreign key(idproducto) reference producto(id) on delete cascade on update cascade;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'reference producto(id) on delete cascade on update cascade' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura_de add constraint foreign key(idproducto) reference producto(id), on delete cascade on update cascade;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'reference producto(id), on delete cascade on update cascade' at line 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura_de add constraint foreign key(idproducto) references producto(id) on delete cascade on update cascade;
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`tbd_e2`.`#sql-131c_9`, CONSTRAINT `factura_de_ibfk_2` FOREIGN KEY (`idproducto`) REFERENCES `producto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura_de add constraint foreign key(idproducto) references producto(id) on delete cascade on update cascade;
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`tbd_e2`.`#sql-131c_9`, CONSTRAINT `factura_de_ibfk_2` FOREIGN KEY (`idproducto`) REFERENCES `producto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL >
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > update producto set id = 20 where id = 2;
+Query OK, 1 row affected (0.0103 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura_de add constraint foreign key(idproducto) references producto(id) on delete cascade on update cascade;
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`tbd_e2`.`#sql-131c_9`, CONSTRAINT `factura_de_ibfk_2` FOREIGN KEY (`idproducto`) REFERENCES `producto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from factura_de;
++----+------------+-----------+----------+
+| id | idproducto | idfactura | cantidad |
++----+------------+-----------+----------+
+|  1 |          6 |         1 |        3 |
+|  2 |          1 |         3 |        4 |
+|  3 |          3 |         4 |        1 |
++----+------------+-----------+----------+
+3 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > update producto set id = 2 where id = 2;
+Query OK, 0 rows affected (0.0006 sec)
+
+Rows matched: 0  Changed: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from producto;
++----+--------+--------+
+| id | nombre | precio |
++----+--------+--------+
+|  1 | elote  |  20.00 |
+|  3 | ihone  |  25.00 |
+| 20 | nachos |  50.00 |
++----+--------+--------+
+3 rows in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > update producto set id = 2 where id = 20;
+Query OK, 1 row affected (0.0090 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > select * from producto;
++----+--------+--------+
+| id | nombre | precio |
++----+--------+--------+
+|  1 | elote  |  20.00 |
+|  2 | nachos |  50.00 |
+|  3 | ihone  |  25.00 |
++----+--------+--------+
+3 rows in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > delete from factura_de;
+Query OK, 3 rows affected (0.0063 sec)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > alter table factura_de add constraint foreign key(idproducto) references producto(id) on delete cascade on update cascade;
+Query OK, 0 rows affected (0.0993 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into factura_de(idproducto,cantidad)
+                                       -> value(100,50)
+                                       -> ;
+ERROR: 1364 (HY000): Field 'idfactura' doesn't have a default value
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into factura_de(idproducto,cantidad) value(100,50);
+ERROR: 1364 (HY000): Field 'idfactura' doesn't have a default value
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into factura_de(idproducto,idfactura,cantidad) value(100,50);
+ERROR: 1136 (21S01): Column count doesn't match value count at row 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into factura_de(idproducto,idfactura,cantidad) value(100,50);
+ERROR: 1136 (21S01): Column count doesn't match value count at row 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into factura_de(idproducto,idfactura,cantidad) value(100,1,50);
+ERROR: 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`tbd_e2`.`factura_de`, CONSTRAINT `factura_de_ibfk_2` FOREIGN KEY (`idproducto`) REFERENCES `producto` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)
+ MySQL  localhost:3306 ssl  tbd_e2  SQL > insert into factura_de(idproducto,idfactura,cantidad) value(100,50);
+ERROR: 1136 (21S01): Column count doesn't match value count at row 1
+ MySQL  localhost:3306 ssl  tbd_e2  SQL >
