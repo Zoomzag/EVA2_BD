@@ -1,0 +1,1797 @@
+16044 rows in set (0.0021 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select  sum(amount) as total, customer_id from payment group by customer_id order by total desc limit 1;
++--------+-------------+
+| total  | customer_id |
++--------+-------------+
+| 221.55 |         526 |
++--------+-------------+
+1 row in set (0.0343 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select  sum(amount) as total, customer_id from payment group by customer_id order by total asc limit 1;
++-------+-------------+
+| total | customer_id |
++-------+-------------+
+| 50.85 |         248 |
++-------+-------------+
+1 row in set (0.0376 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select * from customer where customer_id = 248;
++-------------+----------+------------+-----------+------------------------------------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name | email                              | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-----------+------------------------------------+------------+--------+---------------------+---------------------+
+|         248 |        1 | CAROLINE   | BOWMAN    | CAROLINE.BOWMAN@sakilacustomer.org |        252 |      1 | 2006-02-14 22:04:36 | 2006-02-15 04:57:20 |
++-------------+----------+------------+-----------+------------------------------------+------------+--------+---------------------+---------------------+
+1 row in set (0.0007 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select * from customer where customer_id = 526;
++-------------+----------+------------+-----------+------------------------------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name | email                        | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-----------+------------------------------+------------+--------+---------------------+---------------------+
+|         526 |        2 | KARL       | SEAL      | KARL.SEAL@sakilacustomer.org |        532 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
++-------------+----------+------------+-----------+------------------------------+------------+--------+---------------------+---------------------+
+1 row in set (0.0006 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select  sum(amount) as total, customer_id from payment group by customer_id order by total desc limit 1;
++--------+-------------+
+| total  | customer_id |
++--------+-------------+
+| 221.55 |         526 |
++--------+-------------+
+1 row in set (0.0374 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > desc customer;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| customer_id | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| store_id    | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   | MUL | NULL              |                                               |
+| email       | varchar(50)       | YES  |     | NULL              |                                               |
+| address_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| active      | tinyint(1)        | NO   |     | 1                 |                                               |
+| create_date | datetime          | NO   |     | NULL              |                                               |
+| last_update | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+9 rows in set (0.0051 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select * from store;
++----------+------------------+------------+---------------------+
+| store_id | manager_staff_id | address_id | last_update         |
++----------+------------------+------------+---------------------+
+|        1 |                1 |          1 | 2006-02-15 04:57:12 |
+|        2 |                2 |          2 | 2006-02-15 04:57:12 |
++----------+------------------+------------+---------------------+
+2 rows in set (0.1527 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > desc store;
++------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field            | Type              | Null | Key | Default           | Extra                                         |
++------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| store_id         | tinyint unsigned  | NO   | PRI | NULL              | auto_increment                                |
+| manager_staff_id | tinyint unsigned  | NO   | UNI | NULL              |                                               |
+| address_id       | smallint unsigned | NO   | MUL | NULL              |                                               |
+| last_update      | timestamp         | NO   |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++------------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+4 rows in set (0.0025 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > desc customer;
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| Field       | Type              | Null | Key | Default           | Extra                                         |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+| customer_id | smallint unsigned | NO   | PRI | NULL              | auto_increment                                |
+| store_id    | tinyint unsigned  | NO   | MUL | NULL              |                                               |
+| first_name  | varchar(45)       | NO   |     | NULL              |                                               |
+| last_name   | varchar(45)       | NO   | MUL | NULL              |                                               |
+| email       | varchar(50)       | YES  |     | NULL              |                                               |
+| address_id  | smallint unsigned | NO   | MUL | NULL              |                                               |
+| active      | tinyint(1)        | NO   |     | 1                 |                                               |
+| create_date | datetime          | NO   |     | NULL              |                                               |
+| last_update | timestamp         | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
++-------------+-------------------+------+-----+-------------------+-----------------------------------------------+
+9 rows in set (0.0020 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > insert into customer(store_id, first_name, last_name, address_id,active, creat_date)
+                                       -> value(1,"juan","perez",1,1,"1999-01-25");
+ERROR: 1054 (42S22): Unknown column 'creat_date' in 'field list'
+ MySQL  localhost:3306 ssl  sakila  SQL > insert into customer(store_id, first_name, last_name, address_id,active, create_date) value(1,"juan","perez",1,1,"1999-01-25");
+Query OK, 1 row affected (0.0915 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > selec * from customer where first_name = "juan";
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selec * from customer where first_name = "juan"' at line 1
+ MySQL  localhost:3306 ssl  sakila  SQL > select * from customer where first_name = "juan";
++-------------+----------+------------+-----------+--------------------------------+------------+--------+---------------------+---------------------+
+| customer_id | store_id | first_name | last_name | email                          | address_id | active | create_date         | last_update         |
++-------------+----------+------------+-----------+--------------------------------+------------+--------+---------------------+---------------------+
+|         350 |        1 | JUAN       | FRALEY    | JUAN.FRALEY@sakilacustomer.org |        355 |      1 | 2006-02-14 22:04:37 | 2006-02-15 04:57:20 |
+|         600 |        1 | juan       | perez     | NULL                           |          1 |      1 | 2024-10-02 19:21:52 | 2024-10-02 19:21:52 |
++-------------+----------+------------+-----------+--------------------------------+------------+--------+---------------------+---------------------+
+2 rows in set (0.0051 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select customer_id, first_name, last_name
+                                       -> from customer
+                                       -> where customer_id in (
+                                       -> select distinct(customer_id)
+                                       -> from payment);
++-------------+-------------+--------------+
+| customer_id | first_name  | last_name    |
++-------------+-------------+--------------+
+|           1 | MARY        | SMITH        |
+|           2 | PATRICIA    | JOHNSON      |
+|           3 | LINDA       | WILLIAMS     |
+|           4 | BARBARA     | JONES        |
+|           5 | ELIZABETH   | BROWN        |
+|           6 | JENNIFER    | DAVIS        |
+|           7 | MARIA       | MILLER       |
+|           8 | SUSAN       | WILSON       |
+|           9 | MARGARET    | MOORE        |
+|          10 | DOROTHY     | TAYLOR       |
+|          11 | LISA        | ANDERSON     |
+|          12 | NANCY       | THOMAS       |
+|          13 | KAREN       | JACKSON      |
+|          14 | BETTY       | WHITE        |
+|          15 | HELEN       | HARRIS       |
+|          16 | SANDRA      | MARTIN       |
+|          17 | DONNA       | THOMPSON     |
+|          18 | CAROL       | GARCIA       |
+|          19 | RUTH        | MARTINEZ     |
+|          20 | SHARON      | ROBINSON     |
+|          21 | MICHELLE    | CLARK        |
+|          22 | LAURA       | RODRIGUEZ    |
+|          23 | SARAH       | LEWIS        |
+|          24 | KIMBERLY    | LEE          |
+|          25 | DEBORAH     | WALKER       |
+|          26 | JESSICA     | HALL         |
+|          27 | SHIRLEY     | ALLEN        |
+|          28 | CYNTHIA     | YOUNG        |
+|          29 | ANGELA      | HERNANDEZ    |
+|          30 | MELISSA     | KING         |
+|          31 | BRENDA      | WRIGHT       |
+|          32 | AMY         | LOPEZ        |
+|          33 | ANNA        | HILL         |
+|          34 | REBECCA     | SCOTT        |
+|          35 | VIRGINIA    | GREEN        |
+|          36 | KATHLEEN    | ADAMS        |
+|          37 | PAMELA      | BAKER        |
+|          38 | MARTHA      | GONZALEZ     |
+|          39 | DEBRA       | NELSON       |
+|          40 | AMANDA      | CARTER       |
+|          41 | STEPHANIE   | MITCHELL     |
+|          42 | CAROLYN     | PEREZ        |
+|          43 | CHRISTINE   | ROBERTS      |
+|          44 | MARIE       | TURNER       |
+|          45 | JANET       | PHILLIPS     |
+|          46 | CATHERINE   | CAMPBELL     |
+|          47 | FRANCES     | PARKER       |
+|          48 | ANN         | EVANS        |
+|          49 | JOYCE       | EDWARDS      |
+|          50 | DIANE       | COLLINS      |
+|          51 | ALICE       | STEWART      |
+|          52 | JULIE       | SANCHEZ      |
+|          53 | HEATHER     | MORRIS       |
+|          54 | TERESA      | ROGERS       |
+|          55 | DORIS       | REED         |
+|          56 | GLORIA      | COOK         |
+|          57 | EVELYN      | MORGAN       |
+|          58 | JEAN        | BELL         |
+|          59 | CHERYL      | MURPHY       |
+|          60 | MILDRED     | BAILEY       |
+|          61 | KATHERINE   | RIVERA       |
+|          62 | JOAN        | COOPER       |
+|          63 | ASHLEY      | RICHARDSON   |
+|          64 | JUDITH      | COX          |
+|          65 | ROSE        | HOWARD       |
+|          66 | JANICE      | WARD         |
+|          67 | KELLY       | TORRES       |
+|          68 | NICOLE      | PETERSON     |
+|          69 | JUDY        | GRAY         |
+|          70 | CHRISTINA   | RAMIREZ      |
+|          71 | KATHY       | JAMES        |
+|          72 | THERESA     | WATSON       |
+|          73 | BEVERLY     | BROOKS       |
+|          74 | DENISE      | KELLY        |
+|          75 | TAMMY       | SANDERS      |
+|          76 | IRENE       | PRICE        |
+|          77 | JANE        | BENNETT      |
+|          78 | LORI        | WOOD         |
+|          79 | RACHEL      | BARNES       |
+|          80 | MARILYN     | ROSS         |
+|          81 | ANDREA      | HENDERSON    |
+|          82 | KATHRYN     | COLEMAN      |
+|          83 | LOUISE      | JENKINS      |
+|          84 | SARA        | PERRY        |
+|          85 | ANNE        | POWELL       |
+|          86 | JACQUELINE  | LONG         |
+|          87 | WANDA       | PATTERSON    |
+|          88 | BONNIE      | HUGHES       |
+|          89 | JULIA       | FLORES       |
+|          90 | RUBY        | WASHINGTON   |
+|          91 | LOIS        | BUTLER       |
+|          92 | TINA        | SIMMONS      |
+|          93 | PHYLLIS     | FOSTER       |
+|          94 | NORMA       | GONZALES     |
+|          95 | PAULA       | BRYANT       |
+|          96 | DIANA       | ALEXANDER    |
+|          97 | ANNIE       | RUSSELL      |
+|          98 | LILLIAN     | GRIFFIN      |
+|          99 | EMILY       | DIAZ         |
+|         100 | ROBIN       | HAYES        |
+|         101 | PEGGY       | MYERS        |
+|         102 | CRYSTAL     | FORD         |
+|         103 | GLADYS      | HAMILTON     |
+|         104 | RITA        | GRAHAM       |
+|         105 | DAWN        | SULLIVAN     |
+|         106 | CONNIE      | WALLACE      |
+|         107 | FLORENCE    | WOODS        |
+|         108 | TRACY       | COLE         |
+|         109 | EDNA        | WEST         |
+|         110 | TIFFANY     | JORDAN       |
+|         111 | CARMEN      | OWENS        |
+|         112 | ROSA        | REYNOLDS     |
+|         113 | CINDY       | FISHER       |
+|         114 | GRACE       | ELLIS        |
+|         115 | WENDY       | HARRISON     |
+|         116 | VICTORIA    | GIBSON       |
+|         117 | EDITH       | MCDONALD     |
+|         118 | KIM         | CRUZ         |
+|         119 | SHERRY      | MARSHALL     |
+|         120 | SYLVIA      | ORTIZ        |
+|         121 | JOSEPHINE   | GOMEZ        |
+|         122 | THELMA      | MURRAY       |
+|         123 | SHANNON     | FREEMAN      |
+|         124 | SHEILA      | WELLS        |
+|         125 | ETHEL       | WEBB         |
+|         126 | ELLEN       | SIMPSON      |
+|         127 | ELAINE      | STEVENS      |
+|         128 | MARJORIE    | TUCKER       |
+|         129 | CARRIE      | PORTER       |
+|         130 | CHARLOTTE   | HUNTER       |
+|         131 | MONICA      | HICKS        |
+|         132 | ESTHER      | CRAWFORD     |
+|         133 | PAULINE     | HENRY        |
+|         134 | EMMA        | BOYD         |
+|         135 | JUANITA     | MASON        |
+|         136 | ANITA       | MORALES      |
+|         137 | RHONDA      | KENNEDY      |
+|         138 | HAZEL       | WARREN       |
+|         139 | AMBER       | DIXON        |
+|         140 | EVA         | RAMOS        |
+|         141 | DEBBIE      | REYES        |
+|         142 | APRIL       | BURNS        |
+|         143 | LESLIE      | GORDON       |
+|         144 | CLARA       | SHAW         |
+|         145 | LUCILLE     | HOLMES       |
+|         146 | JAMIE       | RICE         |
+|         147 | JOANNE      | ROBERTSON    |
+|         148 | ELEANOR     | HUNT         |
+|         149 | VALERIE     | BLACK        |
+|         150 | DANIELLE    | DANIELS      |
+|         151 | MEGAN       | PALMER       |
+|         152 | ALICIA      | MILLS        |
+|         153 | SUZANNE     | NICHOLS      |
+|         154 | MICHELE     | GRANT        |
+|         155 | GAIL        | KNIGHT       |
+|         156 | BERTHA      | FERGUSON     |
+|         157 | DARLENE     | ROSE         |
+|         158 | VERONICA    | STONE        |
+|         159 | JILL        | HAWKINS      |
+|         160 | ERIN        | DUNN         |
+|         161 | GERALDINE   | PERKINS      |
+|         162 | LAUREN      | HUDSON       |
+|         163 | CATHY       | SPENCER      |
+|         164 | JOANN       | GARDNER      |
+|         165 | LORRAINE    | STEPHENS     |
+|         166 | LYNN        | PAYNE        |
+|         167 | SALLY       | PIERCE       |
+|         168 | REGINA      | BERRY        |
+|         169 | ERICA       | MATTHEWS     |
+|         170 | BEATRICE    | ARNOLD       |
+|         171 | DOLORES     | WAGNER       |
+|         172 | BERNICE     | WILLIS       |
+|         173 | AUDREY      | RAY          |
+|         174 | YVONNE      | WATKINS      |
+|         175 | ANNETTE     | OLSON        |
+|         176 | JUNE        | CARROLL      |
+|         177 | SAMANTHA    | DUNCAN       |
+|         178 | MARION      | SNYDER       |
+|         179 | DANA        | HART         |
+|         180 | STACY       | CUNNINGHAM   |
+|         181 | ANA         | BRADLEY      |
+|         182 | RENEE       | LANE         |
+|         183 | IDA         | ANDREWS      |
+|         184 | VIVIAN      | RUIZ         |
+|         185 | ROBERTA     | HARPER       |
+|         186 | HOLLY       | FOX          |
+|         187 | BRITTANY    | RILEY        |
+|         188 | MELANIE     | ARMSTRONG    |
+|         189 | LORETTA     | CARPENTER    |
+|         190 | YOLANDA     | WEAVER       |
+|         191 | JEANETTE    | GREENE       |
+|         192 | LAURIE      | LAWRENCE     |
+|         193 | KATIE       | ELLIOTT      |
+|         194 | KRISTEN     | CHAVEZ       |
+|         195 | VANESSA     | SIMS         |
+|         196 | ALMA        | AUSTIN       |
+|         197 | SUE         | PETERS       |
+|         198 | ELSIE       | KELLEY       |
+|         199 | BETH        | FRANKLIN     |
+|         200 | JEANNE      | LAWSON       |
+|         201 | VICKI       | FIELDS       |
+|         202 | CARLA       | GUTIERREZ    |
+|         203 | TARA        | RYAN         |
+|         204 | ROSEMARY    | SCHMIDT      |
+|         205 | EILEEN      | CARR         |
+|         206 | TERRI       | VASQUEZ      |
+|         207 | GERTRUDE    | CASTILLO     |
+|         208 | LUCY        | WHEELER      |
+|         209 | TONYA       | CHAPMAN      |
+|         210 | ELLA        | OLIVER       |
+|         211 | STACEY      | MONTGOMERY   |
+|         212 | WILMA       | RICHARDS     |
+|         213 | GINA        | WILLIAMSON   |
+|         214 | KRISTIN     | JOHNSTON     |
+|         215 | JESSIE      | BANKS        |
+|         216 | NATALIE     | MEYER        |
+|         217 | AGNES       | BISHOP       |
+|         218 | VERA        | MCCOY        |
+|         219 | WILLIE      | HOWELL       |
+|         220 | CHARLENE    | ALVAREZ      |
+|         221 | BESSIE      | MORRISON     |
+|         222 | DELORES     | HANSEN       |
+|         223 | MELINDA     | FERNANDEZ    |
+|         224 | PEARL       | GARZA        |
+|         225 | ARLENE      | HARVEY       |
+|         226 | MAUREEN     | LITTLE       |
+|         227 | COLLEEN     | BURTON       |
+|         228 | ALLISON     | STANLEY      |
+|         229 | TAMARA      | NGUYEN       |
+|         230 | JOY         | GEORGE       |
+|         231 | GEORGIA     | JACOBS       |
+|         232 | CONSTANCE   | REID         |
+|         233 | LILLIE      | KIM          |
+|         234 | CLAUDIA     | FULLER       |
+|         235 | JACKIE      | LYNCH        |
+|         236 | MARCIA      | DEAN         |
+|         237 | TANYA       | GILBERT      |
+|         238 | NELLIE      | GARRETT      |
+|         239 | MINNIE      | ROMERO       |
+|         240 | MARLENE     | WELCH        |
+|         241 | HEIDI       | LARSON       |
+|         242 | GLENDA      | FRAZIER      |
+|         243 | LYDIA       | BURKE        |
+|         244 | VIOLA       | HANSON       |
+|         245 | COURTNEY    | DAY          |
+|         246 | MARIAN      | MENDOZA      |
+|         247 | STELLA      | MORENO       |
+|         248 | CAROLINE    | BOWMAN       |
+|         249 | DORA        | MEDINA       |
+|         250 | JO          | FOWLER       |
+|         251 | VICKIE      | BREWER       |
+|         252 | MATTIE      | HOFFMAN      |
+|         253 | TERRY       | CARLSON      |
+|         254 | MAXINE      | SILVA        |
+|         255 | IRMA        | PEARSON      |
+|         256 | MABEL       | HOLLAND      |
+|         257 | MARSHA      | DOUGLAS      |
+|         258 | MYRTLE      | FLEMING      |
+|         259 | LENA        | JENSEN       |
+|         260 | CHRISTY     | VARGAS       |
+|         261 | DEANNA      | BYRD         |
+|         262 | PATSY       | DAVIDSON     |
+|         263 | HILDA       | HOPKINS      |
+|         264 | GWENDOLYN   | MAY          |
+|         265 | JENNIE      | TERRY        |
+|         266 | NORA        | HERRERA      |
+|         267 | MARGIE      | WADE         |
+|         268 | NINA        | SOTO         |
+|         269 | CASSANDRA   | WALTERS      |
+|         270 | LEAH        | CURTIS       |
+|         271 | PENNY       | NEAL         |
+|         272 | KAY         | CALDWELL     |
+|         273 | PRISCILLA   | LOWE         |
+|         274 | NAOMI       | JENNINGS     |
+|         275 | CAROLE      | BARNETT      |
+|         276 | BRANDY      | GRAVES       |
+|         277 | OLGA        | JIMENEZ      |
+|         278 | BILLIE      | HORTON       |
+|         279 | DIANNE      | SHELTON      |
+|         280 | TRACEY      | BARRETT      |
+|         281 | LEONA       | OBRIEN       |
+|         282 | JENNY       | CASTRO       |
+|         283 | FELICIA     | SUTTON       |
+|         284 | SONIA       | GREGORY      |
+|         285 | MIRIAM      | MCKINNEY     |
+|         286 | VELMA       | LUCAS        |
+|         287 | BECKY       | MILES        |
+|         288 | BOBBIE      | CRAIG        |
+|         289 | VIOLET      | RODRIQUEZ    |
+|         290 | KRISTINA    | CHAMBERS     |
+|         291 | TONI        | HOLT         |
+|         292 | MISTY       | LAMBERT      |
+|         293 | MAE         | FLETCHER     |
+|         294 | SHELLY      | WATTS        |
+|         295 | DAISY       | BATES        |
+|         296 | RAMONA      | HALE         |
+|         297 | SHERRI      | RHODES       |
+|         298 | ERIKA       | PENA         |
+|         299 | JAMES       | GANNON       |
+|         300 | JOHN        | FARNSWORTH   |
+|         301 | ROBERT      | BAUGHMAN     |
+|         302 | MICHAEL     | SILVERMAN    |
+|         303 | WILLIAM     | SATTERFIELD  |
+|         304 | DAVID       | ROYAL        |
+|         305 | RICHARD     | MCCRARY      |
+|         306 | CHARLES     | KOWALSKI     |
+|         307 | JOSEPH      | JOY          |
+|         308 | THOMAS      | GRIGSBY      |
+|         309 | CHRISTOPHER | GRECO        |
+|         310 | DANIEL      | CABRAL       |
+|         311 | PAUL        | TROUT        |
+|         312 | MARK        | RINEHART     |
+|         313 | DONALD      | MAHON        |
+|         314 | GEORGE      | LINTON       |
+|         315 | KENNETH     | GOODEN       |
+|         316 | STEVEN      | CURLEY       |
+|         317 | EDWARD      | BAUGH        |
+|         318 | BRIAN       | WYMAN        |
+|         319 | RONALD      | WEINER       |
+|         320 | ANTHONY     | SCHWAB       |
+|         321 | KEVIN       | SCHULER      |
+|         322 | JASON       | MORRISSEY    |
+|         323 | MATTHEW     | MAHAN        |
+|         324 | GARY        | COY          |
+|         325 | TIMOTHY     | BUNN         |
+|         326 | JOSE        | ANDREW       |
+|         327 | LARRY       | THRASHER     |
+|         328 | JEFFREY     | SPEAR        |
+|         329 | FRANK       | WAGGONER     |
+|         330 | SCOTT       | SHELLEY      |
+|         331 | ERIC        | ROBERT       |
+|         332 | STEPHEN     | QUALLS       |
+|         333 | ANDREW      | PURDY        |
+|         334 | RAYMOND     | MCWHORTER    |
+|         335 | GREGORY     | MAULDIN      |
+|         336 | JOSHUA      | MARK         |
+|         337 | JERRY       | JORDON       |
+|         338 | DENNIS      | GILMAN       |
+|         339 | WALTER      | PERRYMAN     |
+|         340 | PATRICK     | NEWSOM       |
+|         341 | PETER       | MENARD       |
+|         342 | HAROLD      | MARTINO      |
+|         343 | DOUGLAS     | GRAF         |
+|         344 | HENRY       | BILLINGSLEY  |
+|         345 | CARL        | ARTIS        |
+|         346 | ARTHUR      | SIMPKINS     |
+|         347 | RYAN        | SALISBURY    |
+|         348 | ROGER       | QUINTANILLA  |
+|         349 | JOE         | GILLILAND    |
+|         350 | JUAN        | FRALEY       |
+|         351 | JACK        | FOUST        |
+|         352 | ALBERT      | CROUSE       |
+|         353 | JONATHAN    | SCARBOROUGH  |
+|         354 | JUSTIN      | NGO          |
+|         355 | TERRY       | GRISSOM      |
+|         356 | GERALD      | FULTZ        |
+|         357 | KEITH       | RICO         |
+|         358 | SAMUEL      | MARLOW       |
+|         359 | WILLIE      | MARKHAM      |
+|         360 | RALPH       | MADRIGAL     |
+|         361 | LAWRENCE    | LAWTON       |
+|         362 | NICHOLAS    | BARFIELD     |
+|         363 | ROY         | WHITING      |
+|         364 | BENJAMIN    | VARNEY       |
+|         365 | BRUCE       | SCHWARZ      |
+|         366 | BRANDON     | HUEY         |
+|         367 | ADAM        | GOOCH        |
+|         368 | HARRY       | ARCE         |
+|         369 | FRED        | WHEAT        |
+|         370 | WAYNE       | TRUONG       |
+|         371 | BILLY       | POULIN       |
+|         372 | STEVE       | MACKENZIE    |
+|         373 | LOUIS       | LEONE        |
+|         374 | JEREMY      | HURTADO      |
+|         375 | AARON       | SELBY        |
+|         376 | RANDY       | GAITHER      |
+|         377 | HOWARD      | FORTNER      |
+|         378 | EUGENE      | CULPEPPER    |
+|         379 | CARLOS      | COUGHLIN     |
+|         380 | RUSSELL     | BRINSON      |
+|         381 | BOBBY       | BOUDREAU     |
+|         382 | VICTOR      | BARKLEY      |
+|         383 | MARTIN      | BALES        |
+|         384 | ERNEST      | STEPP        |
+|         385 | PHILLIP     | HOLM         |
+|         386 | TODD        | TAN          |
+|         387 | JESSE       | SCHILLING    |
+|         388 | CRAIG       | MORRELL      |
+|         389 | ALAN        | KAHN         |
+|         390 | SHAWN       | HEATON       |
+|         391 | CLARENCE    | GAMEZ        |
+|         392 | SEAN        | DOUGLASS     |
+|         393 | PHILIP      | CAUSEY       |
+|         394 | CHRIS       | BROTHERS     |
+|         395 | JOHNNY      | TURPIN       |
+|         396 | EARL        | SHANKS       |
+|         397 | JIMMY       | SCHRADER     |
+|         398 | ANTONIO     | MEEK         |
+|         399 | DANNY       | ISOM         |
+|         400 | BRYAN       | HARDISON     |
+|         401 | TONY        | CARRANZA     |
+|         402 | LUIS        | YANEZ        |
+|         403 | MIKE        | WAY          |
+|         404 | STANLEY     | SCROGGINS    |
+|         405 | LEONARD     | SCHOFIELD    |
+|         406 | NATHAN      | RUNYON       |
+|         407 | DALE        | RATCLIFF     |
+|         408 | MANUEL      | MURRELL      |
+|         409 | RODNEY      | MOELLER      |
+|         410 | CURTIS      | IRBY         |
+|         411 | NORMAN      | CURRIER      |
+|         412 | ALLEN       | BUTTERFIELD  |
+|         413 | MARVIN      | YEE          |
+|         414 | VINCENT     | RALSTON      |
+|         415 | GLENN       | PULLEN       |
+|         416 | JEFFERY     | PINSON       |
+|         417 | TRAVIS      | ESTEP        |
+|         418 | JEFF        | EAST         |
+|         419 | CHAD        | CARBONE      |
+|         420 | JACOB       | LANCE        |
+|         421 | LEE         | HAWKS        |
+|         422 | MELVIN      | ELLINGTON    |
+|         423 | ALFRED      | CASILLAS     |
+|         424 | KYLE        | SPURLOCK     |
+|         425 | FRANCIS     | SIKES        |
+|         426 | BRADLEY     | MOTLEY       |
+|         427 | JESUS       | MCCARTNEY    |
+|         428 | HERBERT     | KRUGER       |
+|         429 | FREDERICK   | ISBELL       |
+|         430 | RAY         | HOULE        |
+|         431 | JOEL        | FRANCISCO    |
+|         432 | EDWIN       | BURK         |
+|         433 | DON         | BONE         |
+|         434 | EDDIE       | TOMLIN       |
+|         435 | RICKY       | SHELBY       |
+|         436 | TROY        | QUIGLEY      |
+|         437 | RANDALL     | NEUMANN      |
+|         438 | BARRY       | LOVELACE     |
+|         439 | ALEXANDER   | FENNELL      |
+|         440 | BERNARD     | COLBY        |
+|         441 | MARIO       | CHEATHAM     |
+|         442 | LEROY       | BUSTAMANTE   |
+|         443 | FRANCISCO   | SKIDMORE     |
+|         444 | MARCUS      | HIDALGO      |
+|         445 | MICHEAL     | FORMAN       |
+|         446 | THEODORE    | CULP         |
+|         447 | CLIFFORD    | BOWENS       |
+|         448 | MIGUEL      | BETANCOURT   |
+|         449 | OSCAR       | AQUINO       |
+|         450 | JAY         | ROBB         |
+|         451 | JIM         | REA          |
+|         452 | TOM         | MILNER       |
+|         453 | CALVIN      | MARTEL       |
+|         454 | ALEX        | GRESHAM      |
+|         455 | JON         | WILES        |
+|         456 | RONNIE      | RICKETTS     |
+|         457 | BILL        | GAVIN        |
+|         458 | LLOYD       | DOWD         |
+|         459 | TOMMY       | COLLAZO      |
+|         460 | LEON        | BOSTIC       |
+|         461 | DEREK       | BLAKELY      |
+|         462 | WARREN      | SHERROD      |
+|         463 | DARRELL     | POWER        |
+|         464 | JEROME      | KENYON       |
+|         465 | FLOYD       | GANDY        |
+|         466 | LEO         | EBERT        |
+|         467 | ALVIN       | DELOACH      |
+|         468 | TIM         | CARY         |
+|         469 | WESLEY      | BULL         |
+|         470 | GORDON      | ALLARD       |
+|         471 | DEAN        | SAUER        |
+|         472 | GREG        | ROBINS       |
+|         473 | JORGE       | OLIVARES     |
+|         474 | DUSTIN      | GILLETTE     |
+|         475 | PEDRO       | CHESTNUT     |
+|         476 | DERRICK     | BOURQUE      |
+|         477 | DAN         | PAINE        |
+|         478 | LEWIS       | LYMAN        |
+|         479 | ZACHARY     | HITE         |
+|         480 | COREY       | HAUSER       |
+|         481 | HERMAN      | DEVORE       |
+|         482 | MAURICE     | CRAWLEY      |
+|         483 | VERNON      | CHAPA        |
+|         484 | ROBERTO     | VU           |
+|         485 | CLYDE       | TOBIAS       |
+|         486 | GLEN        | TALBERT      |
+|         487 | HECTOR      | POINDEXTER   |
+|         488 | SHANE       | MILLARD      |
+|         489 | RICARDO     | MEADOR       |
+|         490 | SAM         | MCDUFFIE     |
+|         491 | RICK        | MATTOX       |
+|         492 | LESTER      | KRAUS        |
+|         493 | BRENT       | HARKINS      |
+|         494 | RAMON       | CHOATE       |
+|         495 | CHARLIE     | BESS         |
+|         496 | TYLER       | WREN         |
+|         497 | GILBERT     | SLEDGE       |
+|         498 | GENE        | SANBORN      |
+|         499 | MARC        | OUTLAW       |
+|         500 | REGINALD    | KINDER       |
+|         501 | RUBEN       | GEARY        |
+|         502 | BRETT       | CORNWELL     |
+|         503 | ANGEL       | BARCLAY      |
+|         504 | NATHANIEL   | ADAM         |
+|         505 | RAFAEL      | ABNEY        |
+|         506 | LESLIE      | SEWARD       |
+|         507 | EDGAR       | RHOADS       |
+|         508 | MILTON      | HOWLAND      |
+|         509 | RAUL        | FORTIER      |
+|         510 | BEN         | EASTER       |
+|         511 | CHESTER     | BENNER       |
+|         512 | CECIL       | VINES        |
+|         513 | DUANE       | TUBBS        |
+|         514 | FRANKLIN    | TROUTMAN     |
+|         515 | ANDRE       | RAPP         |
+|         516 | ELMER       | NOE          |
+|         517 | BRAD        | MCCURDY      |
+|         518 | GABRIEL     | HARDER       |
+|         519 | RON         | DELUCA       |
+|         520 | MITCHELL    | WESTMORELAND |
+|         521 | ROLAND      | SOUTH        |
+|         522 | ARNOLD      | HAVENS       |
+|         523 | HARVEY      | GUAJARDO     |
+|         524 | JARED       | ELY          |
+|         525 | ADRIAN      | CLARY        |
+|         526 | KARL        | SEAL         |
+|         527 | CORY        | MEEHAN       |
+|         528 | CLAUDE      | HERZOG       |
+|         529 | ERIK        | GUILLEN      |
+|         530 | DARRYL      | ASHCRAFT     |
+|         531 | JAMIE       | WAUGH        |
+|         532 | NEIL        | RENNER       |
+|         533 | JESSIE      | MILAM        |
+|         534 | CHRISTIAN   | JUNG         |
+|         535 | JAVIER      | ELROD        |
+|         536 | FERNANDO    | CHURCHILL    |
+|         537 | CLINTON     | BUFORD       |
+|         538 | TED         | BREAUX       |
+|         539 | MATHEW      | BOLIN        |
+|         540 | TYRONE      | ASHER        |
+|         541 | DARREN      | WINDHAM      |
+|         542 | LONNIE      | TIRADO       |
+|         543 | LANCE       | PEMBERTON    |
+|         544 | CODY        | NOLEN        |
+|         545 | JULIO       | NOLAND       |
+|         546 | KELLY       | KNOTT        |
+|         547 | KURT        | EMMONS       |
+|         548 | ALLAN       | CORNISH      |
+|         549 | NELSON      | CHRISTENSON  |
+|         550 | GUY         | BROWNLEE     |
+|         551 | CLAYTON     | BARBEE       |
+|         552 | HUGH        | WALDROP      |
+|         553 | MAX         | PITT         |
+|         554 | DWAYNE      | OLVERA       |
+|         555 | DWIGHT      | LOMBARDI     |
+|         556 | ARMANDO     | GRUBER       |
+|         557 | FELIX       | GAFFNEY      |
+|         558 | JIMMIE      | EGGLESTON    |
+|         559 | EVERETT     | BANDA        |
+|         560 | JORDAN      | ARCHULETA    |
+|         561 | IAN         | STILL        |
+|         562 | WALLACE     | SLONE        |
+|         563 | KEN         | PREWITT      |
+|         564 | BOB         | PFEIFFER     |
+|         565 | JAIME       | NETTLES      |
+|         566 | CASEY       | MENA         |
+|         567 | ALFREDO     | MCADAMS      |
+|         568 | ALBERTO     | HENNING      |
+|         569 | DAVE        | GARDINER     |
+|         570 | IVAN        | CROMWELL     |
+|         571 | JOHNNIE     | CHISHOLM     |
+|         572 | SIDNEY      | BURLESON     |
+|         573 | BYRON       | BOX          |
+|         574 | JULIAN      | VEST         |
+|         575 | ISAAC       | OGLESBY      |
+|         576 | MORRIS      | MCCARTER     |
+|         577 | CLIFTON     | MALCOLM      |
+|         578 | WILLARD     | LUMPKIN      |
+|         579 | DARYL       | LARUE        |
+|         580 | ROSS        | GREY         |
+|         581 | VIRGIL      | WOFFORD      |
+|         582 | ANDY        | VANHORN      |
+|         583 | MARSHALL    | THORN        |
+|         584 | SALVADOR    | TEEL         |
+|         585 | PERRY       | SWAFFORD     |
+|         586 | KIRK        | STCLAIR      |
+|         587 | SERGIO      | STANFIELD    |
+|         588 | MARION      | OCAMPO       |
+|         589 | TRACY       | HERRMANN     |
+|         590 | SETH        | HANNON       |
+|         591 | KENT        | ARSENAULT    |
+|         592 | TERRANCE    | ROUSH        |
+|         593 | RENE        | MCALISTER    |
+|         594 | EDUARDO     | HIATT        |
+|         595 | TERRENCE    | GUNDERSON    |
+|         596 | ENRIQUE     | FORSYTHE     |
+|         597 | FREDDIE     | DUGGAN       |
+|         598 | WADE        | DELVALLE     |
+|         599 | AUSTIN      | CINTRON      |
++-------------+-------------+--------------+
+599 rows in set (0.0100 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > select customer_id, first_name, last_name from customer where customer_id not in ( select distinct(customer_id) from payment);
+
++-------------+------------+-----------+
+| customer_id | first_name | last_name |
++-------------+------------+-----------+
+|         600 | juan       | perez     |
++-------------+------------+-----------+
+1 row in set (0.0100 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > show tables;
++----------------------------+
+| Tables_in_sakila           |
++----------------------------+
+| actor                      |
+| actor_info                 |
+| address                    |
+| category                   |
+| city                       |
+| country                    |
+| customer                   |
+| customer_list              |
+| film                       |
+| film_actor                 |
+| film_category              |
+| film_list                  |
+| film_text                  |
+| inventory                  |
+| language                   |
+| nicer_but_slower_film_list |
+| payment                    |
+| rental                     |
+| sales_by_film_category     |
+| sales_by_store             |
+| staff                      |
+| staff_list                 |
+| store                      |
++----------------------------+
+23 rows in set (0.0061 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_e1             |
+| tbd_e2             |
+| world              |
++--------------------+
+8 rows in set (0.0014 sec)
+ MySQL  localhost:3306 ssl  sakila  SQL > use world;
+Default schema set to `world`.
+Fetching global names, object names from `world` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  world  SQL > show tables;
++-----------------+
+| Tables_in_world |
++-----------------+
+| city            |
+| country         |
+| countrylanguage |
++-----------------+
+3 rows in set (0.0057 sec)
+ MySQL  localhost:3306 ssl  world  SQL > desc city;
++-------------+----------+------+-----+---------+----------------+
+| Field       | Type     | Null | Key | Default | Extra          |
++-------------+----------+------+-----+---------+----------------+
+| ID          | int      | NO   | PRI | NULL    | auto_increment |
+| Name        | char(35) | NO   |     |         |                |
+| CountryCode | char(3)  | NO   | MUL |         |                |
+| District    | char(20) | NO   |     |         |                |
+| Population  | int      | NO   |     | 0       |                |
++-------------+----------+------+-----+---------+----------------+
+5 rows in set (0.0029 sec)
+ MySQL  localhost:3306 ssl  world  SQL > desc country;
++----------------+---------------------------------------------------------------------------------------+------+-----+---------+-------+
+| Field          | Type                                                                                  | Null | Key | Default | Extra |
++----------------+---------------------------------------------------------------------------------------+------+-----+---------+-------+
+| Code           | char(3)                                                                               | NO   | PRI |         |       |
+| Name           | char(52)                                                                              | NO   |     |         |       |
+| Continent      | enum('Asia','Europe','North America','Africa','Oceania','Antarctica','South America') | NO   |     | Asia    |       |
+| Region         | char(26)                                                                              | NO   |     |         |       |
+| SurfaceArea    | decimal(10,2)                                                                         | NO   |     | 0.00    |       |
+| IndepYear      | smallint                                                                              | YES  |     | NULL    |       |
+| Population     | int                                                                                   | NO   |     | 0       |       |
+| LifeExpectancy | decimal(3,1)                                                                          | YES  |     | NULL    |       |
+| GNP            | decimal(10,2)                                                                         | YES  |     | NULL    |       |
+| GNPOld         | decimal(10,2)                                                                         | YES  |     | NULL    |       |
+| LocalName      | char(45)                                                                              | NO   |     |         |       |
+| GovernmentForm | char(45)                                                                              | NO   |     |         |       |
+| HeadOfState    | char(60)                                                                              | YES  |     | NULL    |       |
+| Capital        | int                                                                                   | YES  |     | NULL    |       |
+| Code2          | char(2)                                                                               | NO   |     |         |       |
++----------------+---------------------------------------------------------------------------------------+------+-----+---------+-------+
+15 rows in set (0.0061 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select count(*) from country;
++----------+
+| count(*) |
++----------+
+|      239 |
++----------+
+1 row in set (0.0907 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select * from country;
++------+----------------------------------------------+---------------+---------------------------+-------------+-----------+------------+----------------+------------+------------+----------------------------------------------+----------------------------------------------+-----------------------------------+---------+-------+
+| Code | Name                                         | Continent     | Region                    | SurfaceArea | IndepYear | Population | LifeExpectancy | GNP        | GNPOld     | LocalName                                    | GovernmentForm                               | HeadOfState                       | Capital | Code2 |
++------+----------------------------------------------+---------------+---------------------------+-------------+-----------+------------+----------------+------------+------------+----------------------------------------------+----------------------------------------------+-----------------------------------+---------+-------+
+| ABW  | Aruba                                        | North America | Caribbean                 |      193.00 |      NULL |     103000 |           78.4 |     828.00 |     793.00 | Aruba                                        | Nonmetropolitan Territory of The Netherlands | Beatrix                           |     129 | AW    |
+| AFG  | Afghanistan                                  | Asia          | Southern and Central Asia |   652090.00 |      1919 |   22720000 |           45.9 |    5976.00 |       NULL | Afganistan/Afqanestan                        | Islamic Emirate                              | Mohammad Omar                     |       1 | AF    |
+| AGO  | Angola                                       | Africa        | Central Africa            |  1246700.00 |      1975 |   12878000 |           38.3 |    6648.00 |    7984.00 | Angola                                       | Republic                                     | José Eduardo dos Santos           |      56 | AO    |
+| AIA  | Anguilla                                     | North America | Caribbean                 |       96.00 |      NULL |       8000 |           76.1 |      63.20 |       NULL | Anguilla                                     | Dependent Territory of the UK                | Elisabeth II                      |      62 | AI    |
+| ALB  | Albania                                      | Europe        | Southern Europe           |    28748.00 |      1912 |    3401200 |           71.6 |    3205.00 |    2500.00 | Shqipëria                                    | Republic                                     | Rexhep Mejdani                    |      34 | AL    |
+| AND  | Andorra                                      | Europe        | Southern Europe           |      468.00 |      1278 |      78000 |           83.5 |    1630.00 |       NULL | Andorra                                      | Parliamentary Coprincipality                 |                                   |      55 | AD    |
+| ANT  | Netherlands Antilles                         | North America | Caribbean                 |      800.00 |      NULL |     217000 |           74.7 |    1941.00 |       NULL | Nederlandse Antillen                         | Nonmetropolitan Territory of The Netherlands | Beatrix                           |      33 | AN    |
+| ARE  | United Arab Emirates                         | Asia          | Middle East               |    83600.00 |      1971 |    2441000 |           74.1 |   37966.00 |   36846.00 | Al-Imarat al-´Arabiya al-Muttahida           | Emirate Federation                           | Zayid bin Sultan al-Nahayan       |      65 | AE    |
+| ARG  | Argentina                                    | South America | South America             |  2780400.00 |      1816 |   37032000 |           75.1 |  340238.00 |  323310.00 | Argentina                                    | Federal Republic                             | Fernando de la Rúa                |      69 | AR    |
+| ARM  | Armenia                                      | Asia          | Middle East               |    29800.00 |      1991 |    3520000 |           66.4 |    1813.00 |    1627.00 | Hajastan                                     | Republic                                     | Robert Kotšarjan                  |     126 | AM    |
+| ASM  | American Samoa                               | Oceania       | Polynesia                 |      199.00 |      NULL |      68000 |           75.1 |     334.00 |       NULL | Amerika Samoa                                | US Territory                                 | George W. Bush                    |      54 | AS    |
+| ATA  | Antarctica                                   | Antarctica    | Antarctica                | 13120000.00 |      NULL |          0 |           NULL |       0.00 |       NULL | –                                            | Co-administrated                             |                                   |    NULL | AQ    |
+| ATF  | French Southern territories                  | Antarctica    | Antarctica                |     7780.00 |      NULL |          0 |           NULL |       0.00 |       NULL | Terres australes françaises                  | Nonmetropolitan Territory of France          | Jacques Chirac                    |    NULL | TF    |
+| ATG  | Antigua and Barbuda                          | North America | Caribbean                 |      442.00 |      1981 |      68000 |           70.5 |     612.00 |     584.00 | Antigua and Barbuda                          | Constitutional Monarchy                      | Elisabeth II                      |      63 | AG    |
+| AUS  | Australia                                    | Oceania       | Australia and New Zealand |  7741220.00 |      1901 |   18886000 |           79.8 |  351182.00 |  392911.00 | Australia                                    | Constitutional Monarchy, Federation          | Elisabeth II                      |     135 | AU    |
+| AUT  | Austria                                      | Europe        | Western Europe            |    83859.00 |      1918 |    8091800 |           77.7 |  211860.00 |  206025.00 | Österreich                                   | Federal Republic                             | Thomas Klestil                    |    1523 | AT    |
+| AZE  | Azerbaijan                                   | Asia          | Middle East               |    86600.00 |      1991 |    7734000 |           62.9 |    4127.00 |    4100.00 | Azärbaycan                                   | Federal Republic                             | Heydär Äliyev                     |     144 | AZ    |
+| BDI  | Burundi                                      | Africa        | Eastern Africa            |    27834.00 |      1962 |    6695000 |           46.2 |     903.00 |     982.00 | Burundi/Uburundi                             | Republic                                     | Pierre Buyoya                     |     552 | BI    |
+| BEL  | Belgium                                      | Europe        | Western Europe            |    30518.00 |      1830 |   10239000 |           77.8 |  249704.00 |  243948.00 | België/Belgique                              | Constitutional Monarchy, Federation          | Albert II                         |     179 | BE    |
+| BEN  | Benin                                        | Africa        | Western Africa            |   112622.00 |      1960 |    6097000 |           50.2 |    2357.00 |    2141.00 | Bénin                                        | Republic                                     | Mathieu Kérékou                   |     187 | BJ    |
+| BFA  | Burkina Faso                                 | Africa        | Western Africa            |   274000.00 |      1960 |   11937000 |           46.7 |    2425.00 |    2201.00 | Burkina Faso                                 | Republic                                     | Blaise Compaoré                   |     549 | BF    |
+| BGD  | Bangladesh                                   | Asia          | Southern and Central Asia |   143998.00 |      1971 |  129155000 |           60.2 |   32852.00 |   31966.00 | Bangladesh                                   | Republic                                     | Shahabuddin Ahmad                 |     150 | BD    |
+| BGR  | Bulgaria                                     | Europe        | Eastern Europe            |   110994.00 |      1908 |    8190900 |           70.9 |   12178.00 |   10169.00 | Balgarija                                    | Republic                                     | Petar Stojanov                    |     539 | BG    |
+| BHR  | Bahrain                                      | Asia          | Middle East               |      694.00 |      1971 |     617000 |           73.0 |    6366.00 |    6097.00 | Al-Bahrayn                                   | Monarchy (Emirate)                           | Hamad ibn Isa al-Khalifa          |     149 | BH    |
+| BHS  | Bahamas                                      | North America | Caribbean                 |    13878.00 |      1973 |     307000 |           71.1 |    3527.00 |    3347.00 | The Bahamas                                  | Constitutional Monarchy                      | Elisabeth II                      |     148 | BS    |
+| BIH  | Bosnia and Herzegovina                       | Europe        | Southern Europe           |    51197.00 |      1992 |    3972000 |           71.5 |    2841.00 |       NULL | Bosna i Hercegovina                          | Federal Republic                             | Ante Jelavic                      |     201 | BA    |
+| BLR  | Belarus                                      | Europe        | Eastern Europe            |   207600.00 |      1991 |   10236000 |           68.0 |   13714.00 |       NULL | Belarus                                      | Republic                                     | Aljaksandr Lukašenka              |    3520 | BY    |
+| BLZ  | Belize                                       | North America | Central America           |    22696.00 |      1981 |     241000 |           70.9 |     630.00 |     616.00 | Belize                                       | Constitutional Monarchy                      | Elisabeth II                      |     185 | BZ    |
+| BMU  | Bermuda                                      | North America | North America             |       53.00 |      NULL |      65000 |           76.9 |    2328.00 |    2190.00 | Bermuda                                      | Dependent Territory of the UK                | Elisabeth II                      |     191 | BM    |
+| BOL  | Bolivia                                      | South America | South America             |  1098581.00 |      1825 |    8329000 |           63.7 |    8571.00 |    7967.00 | Bolivia                                      | Republic                                     | Hugo Bánzer Suárez                |     194 | BO    |
+| BRA  | Brazil                                       | South America | South America             |  8547403.00 |      1822 |  170115000 |           62.9 |  776739.00 |  804108.00 | Brasil                                       | Federal Republic                             | Fernando Henrique Cardoso         |     211 | BR    |
+| BRB  | Barbados                                     | North America | Caribbean                 |      430.00 |      1966 |     270000 |           73.0 |    2223.00 |    2186.00 | Barbados                                     | Constitutional Monarchy                      | Elisabeth II                      |     174 | BB    |
+| BRN  | Brunei                                       | Asia          | Southeast Asia            |     5765.00 |      1984 |     328000 |           73.6 |   11705.00 |   12460.00 | Brunei Darussalam                            | Monarchy (Sultanate)                         | Haji Hassan al-Bolkiah            |     538 | BN    |
+| BTN  | Bhutan                                       | Asia          | Southern and Central Asia |    47000.00 |      1910 |    2124000 |           52.4 |     372.00 |     383.00 | Druk-Yul                                     | Monarchy                                     | Jigme Singye Wangchuk             |     192 | BT    |
+| BVT  | Bouvet Island                                | Antarctica    | Antarctica                |       59.00 |      NULL |          0 |           NULL |       0.00 |       NULL | Bouvetøya                                    | Dependent Territory of Norway                | Harald V                          |    NULL | BV    |
+| BWA  | Botswana                                     | Africa        | Southern Africa           |   581730.00 |      1966 |    1622000 |           39.3 |    4834.00 |    4935.00 | Botswana                                     | Republic                                     | Festus G. Mogae                   |     204 | BW    |
+| CAF  | Central African Republic                     | Africa        | Central Africa            |   622984.00 |      1960 |    3615000 |           44.0 |    1054.00 |     993.00 | Centrafrique/Bê-Afrîka                       | Republic                                     | Ange-Félix Patassé                |    1889 | CF    |
+| CAN  | Canada                                       | North America | North America             |  9970610.00 |      1867 |   31147000 |           79.4 |  598862.00 |  625626.00 | Canada                                       | Constitutional Monarchy, Federation          | Elisabeth II                      |    1822 | CA    |
+| CCK  | Cocos (Keeling) Islands                      | Oceania       | Australia and New Zealand |       14.00 |      NULL |        600 |           NULL |       0.00 |       NULL | Cocos (Keeling) Islands                      | Territory of Australia                       | Elisabeth II                      |    2317 | CC    |
+| CHE  | Switzerland                                  | Europe        | Western Europe            |    41284.00 |      1499 |    7160400 |           79.6 |  264478.00 |  256092.00 | Schweiz/Suisse/Svizzera/Svizra               | Federation                                   | Adolf Ogi                         |    3248 | CH    |
+| CHL  | Chile                                        | South America | South America             |   756626.00 |      1810 |   15211000 |           75.7 |   72949.00 |   75780.00 | Chile                                        | Republic                                     | Ricardo Lagos Escobar             |     554 | CL    |
+| CHN  | China                                        | Asia          | Eastern Asia              |  9572900.00 |     -1523 | 1277558000 |           71.4 |  982268.00 |  917719.00 | Zhongquo                                     | People'sRepublic                             | Jiang Zemin                       |    1891 | CN    |
+| CIV  | Côte d’Ivoire                                | Africa        | Western Africa            |   322463.00 |      1960 |   14786000 |           45.2 |   11345.00 |   10285.00 | Côte d’Ivoire                                | Republic                                     | Laurent Gbagbo                    |    2814 | CI    |
+| CMR  | Cameroon                                     | Africa        | Central Africa            |   475442.00 |      1960 |   15085000 |           54.8 |    9174.00 |    8596.00 | Cameroun/Cameroon                            | Republic                                     | Paul Biya                         |    1804 | CM    |
+| COD  | Congo, The Democratic Republic of the        | Africa        | Central Africa            |  2344858.00 |      1960 |   51654000 |           48.8 |    6964.00 |    2474.00 | République Démocratique du Congo             | Republic                                     | Joseph Kabila                     |    2298 | CD    |
+| COG  | Congo                                        | Africa        | Central Africa            |   342000.00 |      1960 |    2943000 |           47.4 |    2108.00 |    2287.00 | Congo                                        | Republic                                     | Denis Sassou-Nguesso              |    2296 | CG    |
+| COK  | Cook Islands                                 | Oceania       | Polynesia                 |      236.00 |      NULL |      20000 |           71.1 |     100.00 |       NULL | The Cook Islands                             | Nonmetropolitan Territory of New Zealand     | Elisabeth II                      |     583 | CK    |
+| COL  | Colombia                                     | South America | South America             |  1138914.00 |      1810 |   42321000 |           70.3 |  102896.00 |  105116.00 | Colombia                                     | Republic                                     | Andrés Pastrana Arango            |    2257 | CO    |
+| COM  | Comoros                                      | Africa        | Eastern Africa            |     1862.00 |      1975 |     578000 |           60.0 |    4401.00 |    4361.00 | Komori/Comores                               | Republic                                     | Azali Assoumani                   |    2295 | KM    |
+| CPV  | Cape Verde                                   | Africa        | Western Africa            |     4033.00 |      1975 |     428000 |           68.9 |     435.00 |     420.00 | Cabo Verde                                   | Republic                                     | António Mascarenhas Monteiro      |    1859 | CV    |
+| CRI  | Costa Rica                                   | North America | Central America           |    51100.00 |      1821 |    4023000 |           75.8 |   10226.00 |    9757.00 | Costa Rica                                   | Republic                                     | Miguel Ángel Rodríguez Echeverría |     584 | CR    |
+| CUB  | Cuba                                         | North America | Caribbean                 |   110861.00 |      1902 |   11201000 |           76.2 |   17843.00 |   18862.00 | Cuba                                         | Socialistic Republic                         | Fidel Castro Ruz                  |    2413 | CU    |
+| CXR  | Christmas Island                             | Oceania       | Australia and New Zealand |      135.00 |      NULL |       2500 |           NULL |       0.00 |       NULL | Christmas Island                             | Territory of Australia                       | Elisabeth II                      |    1791 | CX    |
+| CYM  | Cayman Islands                               | North America | Caribbean                 |      264.00 |      NULL |      38000 |           78.9 |    1263.00 |    1186.00 | Cayman Islands                               | Dependent Territory of the UK                | Elisabeth II                      |     553 | KY    |
+| CYP  | Cyprus                                       | Asia          | Middle East               |     9251.00 |      1960 |     754700 |           76.7 |    9333.00 |    8246.00 | Kýpros/Kibris                                | Republic                                     | Glafkos Klerides                  |    2430 | CY    |
+| CZE  | Czech Republic                               | Europe        | Eastern Europe            |    78866.00 |      1993 |   10278100 |           74.5 |   55017.00 |   52037.00 | ¸esko                                        | Republic                                     | Václav Havel                      |    3339 | CZ    |
+| DEU  | Germany                                      | Europe        | Western Europe            |   357022.00 |      1955 |   82164700 |           77.4 | 2133367.00 | 2102826.00 | Deutschland                                  | Federal Republic                             | Johannes Rau                      |    3068 | DE    |
+| DJI  | Djibouti                                     | Africa        | Eastern Africa            |    23200.00 |      1977 |     638000 |           50.8 |     382.00 |     373.00 | Djibouti/Jibuti                              | Republic                                     | Ismail Omar Guelleh               |     585 | DJ    |
+| DMA  | Dominica                                     | North America | Caribbean                 |      751.00 |      1978 |      71000 |           73.4 |     256.00 |     243.00 | Dominica                                     | Republic                                     | Vernon Shaw                       |     586 | DM    |
+| DNK  | Denmark                                      | Europe        | Nordic Countries          |    43094.00 |       800 |    5330000 |           76.5 |  174099.00 |  169264.00 | Danmark                                      | Constitutional Monarchy                      | Margrethe II                      |    3315 | DK    |
+| DOM  | Dominican Republic                           | North America | Caribbean                 |    48511.00 |      1844 |    8495000 |           73.2 |   15846.00 |   15076.00 | República Dominicana                         | Republic                                     | Hipólito Mejía Domínguez          |     587 | DO    |
+| DZA  | Algeria                                      | Africa        | Northern Africa           |  2381741.00 |      1962 |   31471000 |           69.7 |   49982.00 |   46966.00 | Al-Jaza’ir/Algérie                           | Republic                                     | Abdelaziz Bouteflika              |      35 | DZ    |
+| ECU  | Ecuador                                      | South America | South America             |   283561.00 |      1822 |   12646000 |           71.1 |   19770.00 |   19769.00 | Ecuador                                      | Republic                                     | Gustavo Noboa Bejarano            |     594 | EC    |
+| EGY  | Egypt                                        | Africa        | Northern Africa           |  1001449.00 |      1922 |   68470000 |           63.3 |   82710.00 |   75617.00 | Misr                                         | Republic                                     | Hosni Mubarak                     |     608 | EG    |
+| ERI  | Eritrea                                      | Africa        | Eastern Africa            |   117600.00 |      1993 |    3850000 |           55.8 |     650.00 |     755.00 | Ertra                                        | Republic                                     | Isayas Afewerki [Isaias Afwerki]  |     652 | ER    |
+| ESH  | Western Sahara                               | Africa        | Northern Africa           |   266000.00 |      NULL |     293000 |           49.8 |      60.00 |       NULL | As-Sahrawiya                                 | Occupied by Marocco                          | Mohammed Abdel Aziz               |    2453 | EH    |
+| ESP  | Spain                                        | Europe        | Southern Europe           |   505992.00 |      1492 |   39441700 |           78.8 |  553233.00 |  532031.00 | España                                       | Constitutional Monarchy                      | Juan Carlos I                     |     653 | ES    |
+| EST  | Estonia                                      | Europe        | Baltic Countries          |    45227.00 |      1991 |    1439200 |           69.5 |    5328.00 |    3371.00 | Eesti                                        | Republic                                     | Lennart Meri                      |    3791 | EE    |
+| ETH  | Ethiopia                                     | Africa        | Eastern Africa            |  1104300.00 |     -1000 |   62565000 |           45.2 |    6353.00 |    6180.00 | YeItyop´iya                                  | Republic                                     | Negasso Gidada                    |     756 | ET    |
+| FIN  | Finland                                      | Europe        | Nordic Countries          |   338145.00 |      1917 |    5171300 |           77.4 |  121914.00 |  119833.00 | Suomi                                        | Republic                                     | Tarja Halonen                     |    3236 | FI    |
+| FJI  | Fiji Islands                                 | Oceania       | Melanesia                 |    18274.00 |      1970 |     817000 |           67.9 |    1536.00 |    2149.00 | Fiji Islands                                 | Republic                                     | Josefa Iloilo                     |     764 | FJ    |
+| FLK  | Falkland Islands                             | South America | South America             |    12173.00 |      NULL |       2000 |           NULL |       0.00 |       NULL | Falkland Islands                             | Dependent Territory of the UK                | Elisabeth II                      |     763 | FK    |
+| FRA  | France                                       | Europe        | Western Europe            |   551500.00 |       843 |   59225700 |           78.8 | 1424285.00 | 1392448.00 | France                                       | Republic                                     | Jacques Chirac                    |    2974 | FR    |
+| FRO  | Faroe Islands                                | Europe        | Nordic Countries          |     1399.00 |      NULL |      43000 |           78.4 |       0.00 |       NULL | Føroyar                                      | Part of Denmark                              | Margrethe II                      |     901 | FO    |
+| FSM  | Micronesia, Federated States of              | Oceania       | Micronesia                |      702.00 |      1990 |     119000 |           68.6 |     212.00 |       NULL | Micronesia                                   | Federal Republic                             | Leo A. Falcam                     |    2689 | FM    |
+| GAB  | Gabon                                        | Africa        | Central Africa            |   267668.00 |      1960 |    1226000 |           50.1 |    5493.00 |    5279.00 | Le Gabon                                     | Republic                                     | Omar Bongo                        |     902 | GA    |
+| GBR  | United Kingdom                               | Europe        | British Islands           |   242900.00 |      1066 |   59623400 |           77.7 | 1378330.00 | 1296830.00 | United Kingdom                               | Constitutional Monarchy                      | Elisabeth II                      |     456 | GB    |
+| GEO  | Georgia                                      | Asia          | Middle East               |    69700.00 |      1991 |    4968000 |           64.5 |    6064.00 |    5924.00 | Sakartvelo                                   | Republic                                     | Eduard Ševardnadze                |     905 | GE    |
+| GHA  | Ghana                                        | Africa        | Western Africa            |   238533.00 |      1957 |   20212000 |           57.4 |    7137.00 |    6884.00 | Ghana                                        | Republic                                     | John Kufuor                       |     910 | GH    |
+| GIB  | Gibraltar                                    | Europe        | Southern Europe           |        6.00 |      NULL |      25000 |           79.0 |     258.00 |       NULL | Gibraltar                                    | Dependent Territory of the UK                | Elisabeth II                      |     915 | GI    |
+| GIN  | Guinea                                       | Africa        | Western Africa            |   245857.00 |      1958 |    7430000 |           45.6 |    2352.00 |    2383.00 | Guinée                                       | Republic                                     | Lansana Conté                     |     926 | GN    |
+| GLP  | Guadeloupe                                   | North America | Caribbean                 |     1705.00 |      NULL |     456000 |           77.0 |    3501.00 |       NULL | Guadeloupe                                   | Overseas Department of France                | Jacques Chirac                    |     919 | GP    |
+| GMB  | Gambia                                       | Africa        | Western Africa            |    11295.00 |      1965 |    1305000 |           53.2 |     320.00 |     325.00 | The Gambia                                   | Republic                                     | Yahya Jammeh                      |     904 | GM    |
+| GNB  | Guinea-Bissau                                | Africa        | Western Africa            |    36125.00 |      1974 |    1213000 |           49.0 |     293.00 |     272.00 | Guiné-Bissau                                 | Republic                                     | Kumba Ialá                        |     927 | GW    |
+| GNQ  | Equatorial Guinea                            | Africa        | Central Africa            |    28051.00 |      1968 |     453000 |           53.6 |     283.00 |     542.00 | Guinea Ecuatorial                            | Republic                                     | Teodoro Obiang Nguema Mbasogo     |    2972 | GQ    |
+| GRC  | Greece                                       | Europe        | Southern Europe           |   131626.00 |      1830 |   10545700 |           78.4 |  120724.00 |  119946.00 | Elláda                                       | Republic                                     | Kostis Stefanopoulos              |    2401 | GR    |
+| GRD  | Grenada                                      | North America | Caribbean                 |      344.00 |      1974 |      94000 |           64.5 |     318.00 |       NULL | Grenada                                      | Constitutional Monarchy                      | Elisabeth II                      |     916 | GD    |
+| GRL  | Greenland                                    | North America | North America             |  2166090.00 |      NULL |      56000 |           68.1 |       0.00 |       NULL | Kalaallit Nunaat/Grønland                    | Part of Denmark                              | Margrethe II                      |     917 | GL    |
+| GTM  | Guatemala                                    | North America | Central America           |   108889.00 |      1821 |   11385000 |           66.2 |   19008.00 |   17797.00 | Guatemala                                    | Republic                                     | Alfonso Portillo Cabrera          |     922 | GT    |
+| GUF  | French Guiana                                | South America | South America             |    90000.00 |      NULL |     181000 |           76.1 |     681.00 |       NULL | Guyane française                             | Overseas Department of France                | Jacques Chirac                    |    3014 | GF    |
+| GUM  | Guam                                         | Oceania       | Micronesia                |      549.00 |      NULL |     168000 |           77.8 |    1197.00 |    1136.00 | Guam                                         | US Territory                                 | George W. Bush                    |     921 | GU    |
+| GUY  | Guyana                                       | South America | South America             |   214969.00 |      1966 |     861000 |           64.0 |     722.00 |     743.00 | Guyana                                       | Republic                                     | Bharrat Jagdeo                    |     928 | GY    |
+| HKG  | Hong Kong                                    | Asia          | Eastern Asia              |     1075.00 |      NULL |    6782000 |           79.5 |  166448.00 |  173610.00 | Xianggang/Hong Kong                          | Special Administrative Region of China       | Jiang Zemin                       |     937 | HK    |
+| HMD  | Heard Island and McDonald Islands            | Antarctica    | Antarctica                |      359.00 |      NULL |          0 |           NULL |       0.00 |       NULL | Heard and McDonald Islands                   | Territory of Australia                       | Elisabeth II                      |    NULL | HM    |
+| HND  | Honduras                                     | North America | Central America           |   112088.00 |      1838 |    6485000 |           69.9 |    5333.00 |    4697.00 | Honduras                                     | Republic                                     | Carlos Roberto Flores Facussé     |     933 | HN    |
+| HRV  | Croatia                                      | Europe        | Southern Europe           |    56538.00 |      1991 |    4473000 |           73.7 |   20208.00 |   19300.00 | Hrvatska                                     | Republic                                     | Štipe Mesic                       |    2409 | HR    |
+| HTI  | Haiti                                        | North America | Caribbean                 |    27750.00 |      1804 |    8222000 |           49.2 |    3459.00 |    3107.00 | Haïti/Dayti                                  | Republic                                     | Jean-Bertrand Aristide            |     929 | HT    |
+| HUN  | Hungary                                      | Europe        | Eastern Europe            |    93030.00 |      1918 |   10043200 |           71.4 |   48267.00 |   45914.00 | Magyarország                                 | Republic                                     | Ferenc Mádl                       |    3483 | HU    |
+| IDN  | Indonesia                                    | Asia          | Southeast Asia            |  1904569.00 |      1945 |  212107000 |           68.0 |   84982.00 |  215002.00 | Indonesia                                    | Republic                                     | Abdurrahman Wahid                 |     939 | ID    |
+| IND  | India                                        | Asia          | Southern and Central Asia |  3287263.00 |      1947 | 1013662000 |           62.5 |  447114.00 |  430572.00 | Bharat/India                                 | Federal Republic                             | Kocheril Raman Narayanan          |    1109 | IN    |
+| IOT  | British Indian Ocean Territory               | Africa        | Eastern Africa            |       78.00 |      NULL |          0 |           NULL |       0.00 |       NULL | British Indian Ocean Territory               | Dependent Territory of the UK                | Elisabeth II                      |    NULL | IO    |
+| IRL  | Ireland                                      | Europe        | British Islands           |    70273.00 |      1921 |    3775100 |           76.8 |   75921.00 |   73132.00 | Ireland/Éire                                 | Republic                                     | Mary McAleese                     |    1447 | IE    |
+| IRN  | Iran                                         | Asia          | Southern and Central Asia |  1648195.00 |      1906 |   67702000 |           69.7 |  195746.00 |  160151.00 | Iran                                         | Islamic Republic                             | Ali Mohammad Khatami-Ardakani     |    1380 | IR    |
+| IRQ  | Iraq                                         | Asia          | Middle East               |   438317.00 |      1932 |   23115000 |           66.5 |   11500.00 |       NULL | Al-´Iraq                                     | Republic                                     | Saddam Hussein al-Takriti         |    1365 | IQ    |
+| ISL  | Iceland                                      | Europe        | Nordic Countries          |   103000.00 |      1944 |     279000 |           79.4 |    8255.00 |    7474.00 | Ísland                                       | Republic                                     | Ólafur Ragnar Grímsson            |    1449 | IS    |
+| ISR  | Israel                                       | Asia          | Middle East               |    21056.00 |      1948 |    6217000 |           78.6 |   97477.00 |   98577.00 | Yisra’el/Isra’il                             | Republic                                     | Moshe Katzav                      |    1450 | IL    |
+| ITA  | Italy                                        | Europe        | Southern Europe           |   301316.00 |      1861 |   57680000 |           79.0 | 1161755.00 | 1145372.00 | Italia                                       | Republic                                     | Carlo Azeglio Ciampi              |    1464 | IT    |
+| JAM  | Jamaica                                      | North America | Caribbean                 |    10990.00 |      1962 |    2583000 |           75.2 |    6871.00 |    6722.00 | Jamaica                                      | Constitutional Monarchy                      | Elisabeth II                      |    1530 | JM    |
+| JOR  | Jordan                                       | Asia          | Middle East               |    88946.00 |      1946 |    5083000 |           77.4 |    7526.00 |    7051.00 | Al-Urdunn                                    | Constitutional Monarchy                      | Abdullah II                       |    1786 | JO    |
+| JPN  | Japan                                        | Asia          | Eastern Asia              |   377829.00 |      -660 |  126714000 |           80.7 | 3787042.00 | 4192638.00 | Nihon/Nippon                                 | Constitutional Monarchy                      | Akihito                           |    1532 | JP    |
+| KAZ  | Kazakstan                                    | Asia          | Southern and Central Asia |  2724900.00 |      1991 |   16223000 |           63.2 |   24375.00 |   23383.00 | Qazaqstan                                    | Republic                                     | Nursultan Nazarbajev              |    1864 | KZ    |
+| KEN  | Kenya                                        | Africa        | Eastern Africa            |   580367.00 |      1963 |   30080000 |           48.0 |    9217.00 |   10241.00 | Kenya                                        | Republic                                     | Daniel arap Moi                   |    1881 | KE    |
+| KGZ  | Kyrgyzstan                                   | Asia          | Southern and Central Asia |   199900.00 |      1991 |    4699000 |           63.4 |    1626.00 |    1767.00 | Kyrgyzstan                                   | Republic                                     | Askar Akajev                      |    2253 | KG    |
+| KHM  | Cambodia                                     | Asia          | Southeast Asia            |   181035.00 |      1953 |   11168000 |           56.5 |    5121.00 |    5670.00 | Kâmpuchéa                                    | Constitutional Monarchy                      | Norodom Sihanouk                  |    1800 | KH    |
+| KIR  | Kiribati                                     | Oceania       | Micronesia                |      726.00 |      1979 |      83000 |           59.8 |      40.70 |       NULL | Kiribati                                     | Republic                                     | Teburoro Tito                     |    2256 | KI    |
+| KNA  | Saint Kitts and Nevis                        | North America | Caribbean                 |      261.00 |      1983 |      38000 |           70.7 |     299.00 |       NULL | Saint Kitts and Nevis                        | Constitutional Monarchy                      | Elisabeth II                      |    3064 | KN    |
+| KOR  | South Korea                                  | Asia          | Eastern Asia              |    99434.00 |      1948 |   46844000 |           74.4 |  320749.00 |  442544.00 | Taehan Min’guk (Namhan)                      | Republic                                     | Kim Dae-jung                      |    2331 | KR    |
+| KWT  | Kuwait                                       | Asia          | Middle East               |    17818.00 |      1961 |    1972000 |           76.1 |   27037.00 |   30373.00 | Al-Kuwayt                                    | Constitutional Monarchy (Emirate)            | Jabir al-Ahmad al-Jabir al-Sabah  |    2429 | KW    |
+| LAO  | Laos                                         | Asia          | Southeast Asia            |   236800.00 |      1953 |    5433000 |           53.1 |    1292.00 |    1746.00 | Lao                                          | Republic                                     | Khamtay Siphandone                |    2432 | LA    |
+| LBN  | Lebanon                                      | Asia          | Middle East               |    10400.00 |      1941 |    3282000 |           71.3 |   17121.00 |   15129.00 | Lubnan                                       | Republic                                     | Émile Lahoud                      |    2438 | LB    |
+| LBR  | Liberia                                      | Africa        | Western Africa            |   111369.00 |      1847 |    3154000 |           51.0 |    2012.00 |       NULL | Liberia                                      | Republic                                     | Charles Taylor                    |    2440 | LR    |
+| LBY  | Libyan Arab Jamahiriya                       | Africa        | Northern Africa           |  1759540.00 |      1951 |    5605000 |           75.5 |   44806.00 |   40562.00 | Libiya                                       | Socialistic State                            | Muammar al-Qadhafi                |    2441 | LY    |
+| LCA  | Saint Lucia                                  | North America | Caribbean                 |      622.00 |      1979 |     154000 |           72.3 |     571.00 |       NULL | Saint Lucia                                  | Constitutional Monarchy                      | Elisabeth II                      |    3065 | LC    |
+| LIE  | Liechtenstein                                | Europe        | Western Europe            |      160.00 |      1806 |      32300 |           78.8 |    1119.00 |    1084.00 | Liechtenstein                                | Constitutional Monarchy                      | Hans-Adam II                      |    2446 | LI    |
+| LKA  | Sri Lanka                                    | Asia          | Southern and Central Asia |    65610.00 |      1948 |   18827000 |           71.8 |   15706.00 |   15091.00 | Sri Lanka/Ilankai                            | Republic                                     | Chandrika Kumaratunga             |    3217 | LK    |
+| LSO  | Lesotho                                      | Africa        | Southern Africa           |    30355.00 |      1966 |    2153000 |           50.8 |    1061.00 |    1161.00 | Lesotho                                      | Constitutional Monarchy                      | Letsie III                        |    2437 | LS    |
+| LTU  | Lithuania                                    | Europe        | Baltic Countries          |    65301.00 |      1991 |    3698500 |           69.1 |   10692.00 |    9585.00 | Lietuva                                      | Republic                                     | Valdas Adamkus                    |    2447 | LT    |
+| LUX  | Luxembourg                                   | Europe        | Western Europe            |     2586.00 |      1867 |     435700 |           77.1 |   16321.00 |   15519.00 | Luxembourg/Lëtzebuerg                        | Constitutional Monarchy                      | Henri                             |    2452 | LU    |
+| LVA  | Latvia                                       | Europe        | Baltic Countries          |    64589.00 |      1991 |    2424200 |           68.4 |    6398.00 |    5639.00 | Latvija                                      | Republic                                     | Vaira Vike-Freiberga              |    2434 | LV    |
+| MAC  | Macao                                        | Asia          | Eastern Asia              |       18.00 |      NULL |     473000 |           81.6 |    5749.00 |    5940.00 | Macau/Aomen                                  | Special Administrative Region of China       | Jiang Zemin                       |    2454 | MO    |
+| MAR  | Morocco                                      | Africa        | Northern Africa           |   446550.00 |      1956 |   28351000 |           69.1 |   36124.00 |   33514.00 | Al-Maghrib                                   | Constitutional Monarchy                      | Mohammed VI                       |    2486 | MA    |
+| MCO  | Monaco                                       | Europe        | Western Europe            |        1.50 |      1861 |      34000 |           78.8 |     776.00 |       NULL | Monaco                                       | Constitutional Monarchy                      | Rainier III                       |    2695 | MC    |
+| MDA  | Moldova                                      | Europe        | Eastern Europe            |    33851.00 |      1991 |    4380000 |           64.5 |    1579.00 |    1872.00 | Moldova                                      | Republic                                     | Vladimir Voronin                  |    2690 | MD    |
+| MDG  | Madagascar                                   | Africa        | Eastern Africa            |   587041.00 |      1960 |   15942000 |           55.0 |    3750.00 |    3545.00 | Madagasikara/Madagascar                      | Federal Republic                             | Didier Ratsiraka                  |    2455 | MG    |
+| MDV  | Maldives                                     | Asia          | Southern and Central Asia |      298.00 |      1965 |     286000 |           62.2 |     199.00 |       NULL | Dhivehi Raajje/Maldives                      | Republic                                     | Maumoon Abdul Gayoom              |    2463 | MV    |
+| MEX  | Mexico                                       | North America | Central America           |  1958201.00 |      1810 |   98881000 |           71.5 |  414972.00 |  401461.00 | México                                       | Federal Republic                             | Vicente Fox Quesada               |    2515 | MX    |
+| MHL  | Marshall Islands                             | Oceania       | Micronesia                |      181.00 |      1990 |      64000 |           65.5 |      97.00 |       NULL | Marshall Islands/Majol                       | Republic                                     | Kessai Note                       |    2507 | MH    |
+| MKD  | Macedonia                                    | Europe        | Southern Europe           |    25713.00 |      1991 |    2024000 |           73.8 |    1694.00 |    1915.00 | Makedonija                                   | Republic                                     | Boris Trajkovski                  |    2460 | MK    |
+| MLI  | Mali                                         | Africa        | Western Africa            |  1240192.00 |      1960 |   11234000 |           46.7 |    2642.00 |    2453.00 | Mali                                         | Republic                                     | Alpha Oumar Konaré                |    2482 | ML    |
+| MLT  | Malta                                        | Europe        | Southern Europe           |      316.00 |      1964 |     380200 |           77.9 |    3512.00 |    3338.00 | Malta                                        | Republic                                     | Guido de Marco                    |    2484 | MT    |
+| MMR  | Myanmar                                      | Asia          | Southeast Asia            |   676578.00 |      1948 |   45611000 |           54.9 |  180375.00 |  171028.00 | Myanma Pye                                   | Republic                                     | kenraali Than Shwe                |    2710 | MM    |
+| MNG  | Mongolia                                     | Asia          | Eastern Asia              |  1566500.00 |      1921 |    2662000 |           67.3 |    1043.00 |     933.00 | Mongol Uls                                   | Republic                                     | Natsagiin Bagabandi               |    2696 | MN    |
+| MNP  | Northern Mariana Islands                     | Oceania       | Micronesia                |      464.00 |      NULL |      78000 |           75.5 |       0.00 |       NULL | Northern Mariana Islands                     | Commonwealth of the US                       | George W. Bush                    |    2913 | MP    |
+| MOZ  | Mozambique                                   | Africa        | Eastern Africa            |   801590.00 |      1975 |   19680000 |           37.5 |    2891.00 |    2711.00 | Moçambique                                   | Republic                                     | Joaquím A. Chissano               |    2698 | MZ    |
+| MRT  | Mauritania                                   | Africa        | Western Africa            |  1025520.00 |      1960 |    2670000 |           50.8 |     998.00 |    1081.00 | Muritaniya/Mauritanie                        | Republic                                     | Maaouiya Ould Sid´Ahmad Taya      |    2509 | MR    |
+| MSR  | Montserrat                                   | North America | Caribbean                 |      102.00 |      NULL |      11000 |           78.0 |     109.00 |       NULL | Montserrat                                   | Dependent Territory of the UK                | Elisabeth II                      |    2697 | MS    |
+| MTQ  | Martinique                                   | North America | Caribbean                 |     1102.00 |      NULL |     395000 |           78.3 |    2731.00 |    2559.00 | Martinique                                   | Overseas Department of France                | Jacques Chirac                    |    2508 | MQ    |
+| MUS  | Mauritius                                    | Africa        | Eastern Africa            |     2040.00 |      1968 |    1158000 |           71.0 |    4251.00 |    4186.00 | Mauritius                                    | Republic                                     | Cassam Uteem                      |    2511 | MU    |
+| MWI  | Malawi                                       | Africa        | Eastern Africa            |   118484.00 |      1964 |   10925000 |           37.6 |    1687.00 |    2527.00 | Malawi                                       | Republic                                     | Bakili Muluzi                     |    2462 | MW    |
+| MYS  | Malaysia                                     | Asia          | Southeast Asia            |   329758.00 |      1957 |   22244000 |           70.8 |   69213.00 |   97884.00 | Malaysia                                     | Constitutional Monarchy, Federation          | Salahuddin Abdul Aziz Shah Alhaj  |    2464 | MY    |
+| MYT  | Mayotte                                      | Africa        | Eastern Africa            |      373.00 |      NULL |     149000 |           59.5 |       0.00 |       NULL | Mayotte                                      | Territorial Collectivity of France           | Jacques Chirac                    |    2514 | YT    |
+| NAM  | Namibia                                      | Africa        | Southern Africa           |   824292.00 |      1990 |    1726000 |           42.5 |    3101.00 |    3384.00 | Namibia                                      | Republic                                     | Sam Nujoma                        |    2726 | NA    |
+| NCL  | New Caledonia                                | Oceania       | Melanesia                 |    18575.00 |      NULL |     214000 |           72.8 |    3563.00 |       NULL | Nouvelle-Calédonie                           | Nonmetropolitan Territory of France          | Jacques Chirac                    |    3493 | NC    |
+| NER  | Niger                                        | Africa        | Western Africa            |  1267000.00 |      1960 |   10730000 |           41.3 |    1706.00 |    1580.00 | Niger                                        | Republic                                     | Mamadou Tandja                    |    2738 | NE    |
+| NFK  | Norfolk Island                               | Oceania       | Australia and New Zealand |       36.00 |      NULL |       2000 |           NULL |       0.00 |       NULL | Norfolk Island                               | Territory of Australia                       | Elisabeth II                      |    2806 | NF    |
+| NGA  | Nigeria                                      | Africa        | Western Africa            |   923768.00 |      1960 |  111506000 |           51.6 |   65707.00 |   58623.00 | Nigeria                                      | Federal Republic                             | Olusegun Obasanjo                 |    2754 | NG    |
+| NIC  | Nicaragua                                    | North America | Central America           |   130000.00 |      1838 |    5074000 |           68.7 |    1988.00 |    2023.00 | Nicaragua                                    | Republic                                     | Arnoldo Alemán Lacayo             |    2734 | NI    |
+| NIU  | Niue                                         | Oceania       | Polynesia                 |      260.00 |      NULL |       2000 |           NULL |       0.00 |       NULL | Niue                                         | Nonmetropolitan Territory of New Zealand     | Elisabeth II                      |    2805 | NU    |
+| NLD  | Netherlands                                  | Europe        | Western Europe            |    41526.00 |      1581 |   15864000 |           78.3 |  371362.00 |  360478.00 | Nederland                                    | Constitutional Monarchy                      | Beatrix                           |       5 | NL    |
+| NOR  | Norway                                       | Europe        | Nordic Countries          |   323877.00 |      1905 |    4478500 |           78.7 |  145895.00 |  153370.00 | Norge                                        | Constitutional Monarchy                      | Harald V                          |    2807 | NO    |
+| NPL  | Nepal                                        | Asia          | Southern and Central Asia |   147181.00 |      1769 |   23930000 |           57.8 |    4768.00 |    4837.00 | Nepal                                        | Constitutional Monarchy                      | Gyanendra Bir Bikram              |    2729 | NP    |
+| NRU  | Nauru                                        | Oceania       | Micronesia                |       21.00 |      1968 |      12000 |           60.8 |     197.00 |       NULL | Naoero/Nauru                                 | Republic                                     | Bernard Dowiyogo                  |    2728 | NR    |
+| NZL  | New Zealand                                  | Oceania       | Australia and New Zealand |   270534.00 |      1907 |    3862000 |           77.8 |   54669.00 |   64960.00 | New Zealand/Aotearoa                         | Constitutional Monarchy                      | Elisabeth II                      |    3499 | NZ    |
+| OMN  | Oman                                         | Asia          | Middle East               |   309500.00 |      1951 |    2542000 |           71.8 |   16904.00 |   16153.00 | ´Uman                                        | Monarchy (Sultanate)                         | Qabus ibn Sa´id                   |    2821 | OM    |
+| PAK  | Pakistan                                     | Asia          | Southern and Central Asia |   796095.00 |      1947 |  156483000 |           61.1 |   61289.00 |   58549.00 | Pakistan                                     | Republic                                     | Mohammad Rafiq Tarar              |    2831 | PK    |
+| PAN  | Panama                                       | North America | Central America           |    75517.00 |      1903 |    2856000 |           75.5 |    9131.00 |    8700.00 | Panamá                                       | Republic                                     | Mireya Elisa Moscoso Rodríguez    |    2882 | PA    |
+| PCN  | Pitcairn                                     | Oceania       | Polynesia                 |       49.00 |      NULL |         50 |           NULL |       0.00 |       NULL | Pitcairn                                     | Dependent Territory of the UK                | Elisabeth II                      |    2912 | PN    |
+| PER  | Peru                                         | South America | South America             |  1285216.00 |      1821 |   25662000 |           70.0 |   64140.00 |   65186.00 | Perú/Piruw                                   | Republic                                     | Valentin Paniagua Corazao         |    2890 | PE    |
+| PHL  | Philippines                                  | Asia          | Southeast Asia            |   300000.00 |      1946 |   75967000 |           67.5 |   65107.00 |   82239.00 | Pilipinas                                    | Republic                                     | Gloria Macapagal-Arroyo           |     766 | PH    |
+| PLW  | Palau                                        | Oceania       | Micronesia                |      459.00 |      1994 |      19000 |           68.6 |     105.00 |       NULL | Belau/Palau                                  | Republic                                     | Kuniwo Nakamura                   |    2881 | PW    |
+| PNG  | Papua New Guinea                             | Oceania       | Melanesia                 |   462840.00 |      1975 |    4807000 |           63.1 |    4988.00 |    6328.00 | Papua New Guinea/Papua Niugini               | Constitutional Monarchy                      | Elisabeth II                      |    2884 | PG    |
+| POL  | Poland                                       | Europe        | Eastern Europe            |   323250.00 |      1918 |   38653600 |           73.2 |  151697.00 |  135636.00 | Polska                                       | Republic                                     | Aleksander Kwasniewski            |    2928 | PL    |
+| PRI  | Puerto Rico                                  | North America | Caribbean                 |     8875.00 |      NULL |    3869000 |           75.6 |   34100.00 |   32100.00 | Puerto Rico                                  | Commonwealth of the US                       | George W. Bush                    |    2919 | PR    |
+| PRK  | North Korea                                  | Asia          | Eastern Asia              |   120538.00 |      1948 |   24039000 |           70.7 |    5332.00 |       NULL | Choson Minjujuui In´min Konghwaguk (Bukhan)  | Socialistic Republic                         | Kim Jong-il                       |    2318 | KP    |
+| PRT  | Portugal                                     | Europe        | Southern Europe           |    91982.00 |      1143 |    9997600 |           75.8 |  105954.00 |  102133.00 | Portugal                                     | Republic                                     | Jorge Sampãio                     |    2914 | PT    |
+| PRY  | Paraguay                                     | South America | South America             |   406752.00 |      1811 |    5496000 |           73.7 |    8444.00 |    9555.00 | Paraguay                                     | Republic                                     | Luis Ángel González Macchi        |    2885 | PY    |
+| PSE  | Palestine                                    | Asia          | Middle East               |     6257.00 |      NULL |    3101000 |           71.4 |    4173.00 |       NULL | Filastin                                     | Autonomous Area                              | Yasser (Yasir) Arafat             |    4074 | PS    |
+| PYF  | French Polynesia                             | Oceania       | Polynesia                 |     4000.00 |      NULL |     235000 |           74.8 |     818.00 |     781.00 | Polynésie française                          | Nonmetropolitan Territory of France          | Jacques Chirac                    |    3016 | PF    |
+| QAT  | Qatar                                        | Asia          | Middle East               |    11000.00 |      1971 |     599000 |           72.4 |    9472.00 |    8920.00 | Qatar                                        | Monarchy                                     | Hamad ibn Khalifa al-Thani        |    2973 | QA    |
+| REU  | Réunion                                      | Africa        | Eastern Africa            |     2510.00 |      NULL |     699000 |           72.7 |    8287.00 |    7988.00 | Réunion                                      | Overseas Department of France                | Jacques Chirac                    |    3017 | RE    |
+| ROM  | Romania                                      | Europe        | Eastern Europe            |   238391.00 |      1878 |   22455500 |           69.9 |   38158.00 |   34843.00 | România                                      | Republic                                     | Ion Iliescu                       |    3018 | RO    |
+| RUS  | Russian Federation                           | Europe        | Eastern Europe            | 17075400.00 |      1991 |  146934000 |           67.2 |  276608.00 |  442989.00 | Rossija                                      | Federal Republic                             | Vladimir Putin                    |    3580 | RU    |
+| RWA  | Rwanda                                       | Africa        | Eastern Africa            |    26338.00 |      1962 |    7733000 |           39.3 |    2036.00 |    1863.00 | Rwanda/Urwanda                               | Republic                                     | Paul Kagame                       |    3047 | RW    |
+| SAU  | Saudi Arabia                                 | Asia          | Middle East               |  2149690.00 |      1932 |   21607000 |           67.8 |  137635.00 |  146171.00 | Al-´Arabiya as-Sa´udiya                      | Monarchy                                     | Fahd ibn Abdul-Aziz al-Sa´ud      |    3173 | SA    |
+| SDN  | Sudan                                        | Africa        | Northern Africa           |  2505813.00 |      1956 |   29490000 |           56.6 |   10162.00 |       NULL | As-Sudan                                     | Islamic Republic                             | Omar Hassan Ahmad al-Bashir       |    3225 | SD    |
+| SEN  | Senegal                                      | Africa        | Western Africa            |   196722.00 |      1960 |    9481000 |           62.2 |    4787.00 |    4542.00 | Sénégal/Sounougal                            | Republic                                     | Abdoulaye Wade                    |    3198 | SN    |
+| SGP  | Singapore                                    | Asia          | Southeast Asia            |      618.00 |      1965 |    3567000 |           80.1 |   86503.00 |   96318.00 | Singapore/Singapura/Xinjiapo/Singapur        | Republic                                     | Sellapan Rama Nathan              |    3208 | SG    |
+| SGS  | South Georgia and the South Sandwich Islands | Antarctica    | Antarctica                |     3903.00 |      NULL |          0 |           NULL |       0.00 |       NULL | South Georgia and the South Sandwich Islands | Dependent Territory of the UK                | Elisabeth II                      |    NULL | GS    |
+| SHN  | Saint Helena                                 | Africa        | Western Africa            |      314.00 |      NULL |       6000 |           76.8 |       0.00 |       NULL | Saint Helena                                 | Dependent Territory of the UK                | Elisabeth II                      |    3063 | SH    |
+| SJM  | Svalbard and Jan Mayen                       | Europe        | Nordic Countries          |    62422.00 |      NULL |       3200 |           NULL |       0.00 |       NULL | Svalbard og Jan Mayen                        | Dependent Territory of Norway                | Harald V                          |     938 | SJ    |
+| SLB  | Solomon Islands                              | Oceania       | Melanesia                 |    28896.00 |      1978 |     444000 |           71.3 |     182.00 |     220.00 | Solomon Islands                              | Constitutional Monarchy                      | Elisabeth II                      |    3161 | SB    |
+| SLE  | Sierra Leone                                 | Africa        | Western Africa            |    71740.00 |      1961 |    4854000 |           45.3 |     746.00 |     858.00 | Sierra Leone                                 | Republic                                     | Ahmed Tejan Kabbah                |    3207 | SL    |
+| SLV  | El Salvador                                  | North America | Central America           |    21041.00 |      1841 |    6276000 |           69.7 |   11863.00 |   11203.00 | El Salvador                                  | Republic                                     | Francisco Guillermo Flores Pérez  |     645 | SV    |
+| SMR  | San Marino                                   | Europe        | Southern Europe           |       61.00 |       885 |      27000 |           81.1 |     510.00 |       NULL | San Marino                                   | Republic                                     | NULL                              |    3171 | SM    |
+| SOM  | Somalia                                      | Africa        | Eastern Africa            |   637657.00 |      1960 |   10097000 |           46.2 |     935.00 |       NULL | Soomaaliya                                   | Republic                                     | Abdiqassim Salad Hassan           |    3214 | SO    |
+| SPM  | Saint Pierre and Miquelon                    | North America | North America             |      242.00 |      NULL |       7000 |           77.6 |       0.00 |       NULL | Saint-Pierre-et-Miquelon                     | Territorial Collectivity of France           | Jacques Chirac                    |    3067 | PM    |
+| STP  | Sao Tome and Principe                        | Africa        | Central Africa            |      964.00 |      1975 |     147000 |           65.3 |       6.00 |       NULL | São Tomé e Príncipe                          | Republic                                     | Miguel Trovoada                   |    3172 | ST    |
+| SUR  | Suriname                                     | South America | South America             |   163265.00 |      1975 |     417000 |           71.4 |     870.00 |     706.00 | Suriname                                     | Republic                                     | Ronald Venetiaan                  |    3243 | SR    |
+| SVK  | Slovakia                                     | Europe        | Eastern Europe            |    49012.00 |      1993 |    5398700 |           73.7 |   20594.00 |   19452.00 | Slovensko                                    | Republic                                     | Rudolf Schuster                   |    3209 | SK    |
+| SVN  | Slovenia                                     | Europe        | Southern Europe           |    20256.00 |      1991 |    1987800 |           74.9 |   19756.00 |   18202.00 | Slovenija                                    | Republic                                     | Milan Kucan                       |    3212 | SI    |
+| SWE  | Sweden                                       | Europe        | Nordic Countries          |   449964.00 |       836 |    8861400 |           79.6 |  226492.00 |  227757.00 | Sverige                                      | Constitutional Monarchy                      | Carl XVI Gustaf                   |    3048 | SE    |
+| SWZ  | Swaziland                                    | Africa        | Southern Africa           |    17364.00 |      1968 |    1008000 |           40.4 |    1206.00 |    1312.00 | kaNgwane                                     | Monarchy                                     | Mswati III                        |    3244 | SZ    |
+| SYC  | Seychelles                                   | Africa        | Eastern Africa            |      455.00 |      1976 |      77000 |           70.4 |     536.00 |     539.00 | Sesel/Seychelles                             | Republic                                     | France-Albert René                |    3206 | SC    |
+| SYR  | Syria                                        | Asia          | Middle East               |   185180.00 |      1941 |   16125000 |           68.5 |   65984.00 |   64926.00 | Suriya                                       | Republic                                     | Bashar al-Assad                   |    3250 | SY    |
+| TCA  | Turks and Caicos Islands                     | North America | Caribbean                 |      430.00 |      NULL |      17000 |           73.3 |      96.00 |       NULL | The Turks and Caicos Islands                 | Dependent Territory of the UK                | Elisabeth II                      |    3423 | TC    |
+| TCD  | Chad                                         | Africa        | Central Africa            |  1284000.00 |      1960 |    7651000 |           50.5 |    1208.00 |    1102.00 | Tchad/Tshad                                  | Republic                                     | Idriss Déby                       |    3337 | TD    |
+| TGO  | Togo                                         | Africa        | Western Africa            |    56785.00 |      1960 |    4629000 |           54.7 |    1449.00 |    1400.00 | Togo                                         | Republic                                     | Gnassingbé Eyadéma                |    3332 | TG    |
+| THA  | Thailand                                     | Asia          | Southeast Asia            |   513115.00 |      1350 |   61399000 |           68.6 |  116416.00 |  153907.00 | Prathet Thai                                 | Constitutional Monarchy                      | Bhumibol Adulyadej                |    3320 | TH    |
+| TJK  | Tajikistan                                   | Asia          | Southern and Central Asia |   143100.00 |      1991 |    6188000 |           64.1 |    1990.00 |    1056.00 | Toçikiston                                   | Republic                                     | Emomali Rahmonov                  |    3261 | TJ    |
+| TKL  | Tokelau                                      | Oceania       | Polynesia                 |       12.00 |      NULL |       2000 |           NULL |       0.00 |       NULL | Tokelau                                      | Nonmetropolitan Territory of New Zealand     | Elisabeth II                      |    3333 | TK    |
+| TKM  | Turkmenistan                                 | Asia          | Southern and Central Asia |   488100.00 |      1991 |    4459000 |           60.9 |    4397.00 |    2000.00 | Türkmenostan                                 | Republic                                     | Saparmurad Nijazov                |    3419 | TM    |
+| TMP  | East Timor                                   | Asia          | Southeast Asia            |    14874.00 |      NULL |     885000 |           46.0 |       0.00 |       NULL | Timor Timur                                  | Administrated by the UN                      | José Alexandre Gusmão             |    1522 | TP    |
+| TON  | Tonga                                        | Oceania       | Polynesia                 |      650.00 |      1970 |      99000 |           67.9 |     146.00 |     170.00 | Tonga                                        | Monarchy                                     | Taufa'ahau Tupou IV               |    3334 | TO    |
+| TTO  | Trinidad and Tobago                          | North America | Caribbean                 |     5130.00 |      1962 |    1295000 |           68.0 |    6232.00 |    5867.00 | Trinidad and Tobago                          | Republic                                     | Arthur N. R. Robinson             |    3336 | TT    |
+| TUN  | Tunisia                                      | Africa        | Northern Africa           |   163610.00 |      1956 |    9586000 |           73.7 |   20026.00 |   18898.00 | Tunis/Tunisie                                | Republic                                     | Zine al-Abidine Ben Ali           |    3349 | TN    |
+| TUR  | Turkey                                       | Asia          | Middle East               |   774815.00 |      1923 |   66591000 |           71.0 |  210721.00 |  189122.00 | Türkiye                                      | Republic                                     | Ahmet Necdet Sezer                |    3358 | TR    |
+| TUV  | Tuvalu                                       | Oceania       | Polynesia                 |       26.00 |      1978 |      12000 |           66.3 |       6.00 |       NULL | Tuvalu                                       | Constitutional Monarchy                      | Elisabeth II                      |    3424 | TV    |
+| TWN  | Taiwan                                       | Asia          | Eastern Asia              |    36188.00 |      1945 |   22256000 |           76.4 |  256254.00 |  263451.00 | T’ai-wan                                     | Republic                                     | Chen Shui-bian                    |    3263 | TW    |
+| TZA  | Tanzania                                     | Africa        | Eastern Africa            |   883749.00 |      1961 |   33517000 |           52.3 |    8005.00 |    7388.00 | Tanzania                                     | Republic                                     | Benjamin William Mkapa            |    3306 | TZ    |
+| UGA  | Uganda                                       | Africa        | Eastern Africa            |   241038.00 |      1962 |   21778000 |           42.9 |    6313.00 |    6887.00 | Uganda                                       | Republic                                     | Yoweri Museveni                   |    3425 | UG    |
+| UKR  | Ukraine                                      | Europe        | Eastern Europe            |   603700.00 |      1991 |   50456000 |           66.0 |   42168.00 |   49677.00 | Ukrajina                                     | Republic                                     | Leonid Kutšma                     |    3426 | UA    |
+| UMI  | United States Minor Outlying Islands         | Oceania       | Micronesia/Caribbean      |       16.00 |      NULL |          0 |           NULL |       0.00 |       NULL | United States Minor Outlying Islands         | Dependent Territory of the US                | George W. Bush                    |    NULL | UM    |
+| URY  | Uruguay                                      | South America | South America             |   175016.00 |      1828 |    3337000 |           75.2 |   20831.00 |   19967.00 | Uruguay                                      | Republic                                     | Jorge Batlle Ibáñez               |    3492 | UY    |
+| USA  | United States                                | North America | North America             |  9363520.00 |      1776 |  278357000 |           77.1 | 8510700.00 | 8110900.00 | United States                                | Federal Republic                             | George W. Bush                    |    3813 | US    |
+| UZB  | Uzbekistan                                   | Asia          | Southern and Central Asia |   447400.00 |      1991 |   24318000 |           63.7 |   14194.00 |   21300.00 | Uzbekiston                                   | Republic                                     | Islam Karimov                     |    3503 | UZ    |
+| VAT  | Holy See (Vatican City State)                | Europe        | Southern Europe           |        0.40 |      1929 |       1000 |           NULL |       9.00 |       NULL | Santa Sede/Città del Vaticano                | Independent Church State                     | Johannes Paavali II               |    3538 | VA    |
+| VCT  | Saint Vincent and the Grenadines             | North America | Caribbean                 |      388.00 |      1979 |     114000 |           72.3 |     285.00 |       NULL | Saint Vincent and the Grenadines             | Constitutional Monarchy                      | Elisabeth II                      |    3066 | VC    |
+| VEN  | Venezuela                                    | South America | South America             |   912050.00 |      1811 |   24170000 |           73.1 |   95023.00 |   88434.00 | Venezuela                                    | Federal Republic                             | Hugo Chávez Frías                 |    3539 | VE    |
+| VGB  | Virgin Islands, British                      | North America | Caribbean                 |      151.00 |      NULL |      21000 |           75.4 |     612.00 |     573.00 | British Virgin Islands                       | Dependent Territory of the UK                | Elisabeth II                      |     537 | VG    |
+| VIR  | Virgin Islands, U.S.                         | North America | Caribbean                 |      347.00 |      NULL |      93000 |           78.1 |       0.00 |       NULL | Virgin Islands of the United States          | US Territory                                 | George W. Bush                    |    4067 | VI    |
+| VNM  | Vietnam                                      | Asia          | Southeast Asia            |   331689.00 |      1945 |   79832000 |           69.3 |   21929.00 |   22834.00 | Viêt Nam                                     | Socialistic Republic                         | Trân Duc Luong                    |    3770 | VN    |
+| VUT  | Vanuatu                                      | Oceania       | Melanesia                 |    12189.00 |      1980 |     190000 |           60.6 |     261.00 |     246.00 | Vanuatu                                      | Republic                                     | John Bani                         |    3537 | VU    |
+| WLF  | Wallis and Futuna                            | Oceania       | Polynesia                 |      200.00 |      NULL |      15000 |           NULL |       0.00 |       NULL | Wallis-et-Futuna                             | Nonmetropolitan Territory of France          | Jacques Chirac                    |    3536 | WF    |
+| WSM  | Samoa                                        | Oceania       | Polynesia                 |     2831.00 |      1962 |     180000 |           69.2 |     141.00 |     157.00 | Samoa                                        | Parlementary Monarchy                        | Malietoa Tanumafili II            |    3169 | WS    |
+| YEM  | Yemen                                        | Asia          | Middle East               |   527968.00 |      1918 |   18112000 |           59.8 |    6041.00 |    5729.00 | Al-Yaman                                     | Republic                                     | Ali Abdallah Salih                |    1780 | YE    |
+| YUG  | Yugoslavia                                   | Europe        | Southern Europe           |   102173.00 |      1918 |   10640000 |           72.4 |   17000.00 |       NULL | Jugoslavija                                  | Federal Republic                             | Vojislav Koštunica                |    1792 | YU    |
+| ZAF  | South Africa                                 | Africa        | Southern Africa           |  1221037.00 |      1910 |   40377000 |           51.1 |  116729.00 |  129092.00 | South Africa                                 | Republic                                     | Thabo Mbeki                       |     716 | ZA    |
+| ZMB  | Zambia                                       | Africa        | Eastern Africa            |   752618.00 |      1964 |    9169000 |           37.2 |    3377.00 |    3922.00 | Zambia                                       | Republic                                     | Frederick Chiluba                 |    3162 | ZM    |
+| ZWE  | Zimbabwe                                     | Africa        | Eastern Africa            |   390757.00 |      1980 |   11669000 |           37.8 |    5951.00 |    8670.00 | Zimbabwe                                     | Republic                                     | Robert G. Mugabe                  |    4068 | ZW    |
++------+----------------------------------------------+---------------+---------------------------+-------------+-----------+------------+----------------+------------+------------+----------------------------------------------+----------------------------------------------+-----------------------------------+---------+-------+
+239 rows in set (0.0049 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select count(*) from city;
++----------+
+| count(*) |
++----------+
+|     4079 |
++----------+
+1 row in set (0.0322 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select * from city limit 10;
++----+----------------+-------------+---------------+------------+
+| ID | Name           | CountryCode | District      | Population |
++----+----------------+-------------+---------------+------------+
+|  1 | Kabul          | AFG         | Kabol         |    1780000 |
+|  2 | Qandahar       | AFG         | Qandahar      |     237500 |
+|  3 | Herat          | AFG         | Herat         |     186800 |
+|  4 | Mazar-e-Sharif | AFG         | Balkh         |     127800 |
+|  5 | Amsterdam      | NLD         | Noord-Holland |     731200 |
+|  6 | Rotterdam      | NLD         | Zuid-Holland  |     593321 |
+|  7 | Haag           | NLD         | Zuid-Holland  |     440900 |
+|  8 | Utrecht        | NLD         | Utrecht       |     234323 |
+|  9 | Eindhoven      | NLD         | Noord-Brabant |     201843 |
+| 10 | Tilburg        | NLD         | Noord-Brabant |     193238 |
++----+----------------+-------------+---------------+------------+
+10 rows in set (0.0050 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select * from city where country = "MEX";
+ERROR: 1054 (42S22): Unknown column 'country' in 'where clause'
+ MySQL  localhost:3306 ssl  world  SQL > select * from city where countrycode = "MEX";
++------+-----------------------------+-------------+----------------------+------------+
+| ID   | Name                        | CountryCode | District             | Population |
++------+-----------------------------+-------------+----------------------+------------+
+| 2515 | Ciudad de México            | MEX         | Distrito Federal     |    8591309 |
+| 2516 | Guadalajara                 | MEX         | Jalisco              |    1647720 |
+| 2517 | Ecatepec de Morelos         | MEX         | México               |    1620303 |
+| 2518 | Puebla                      | MEX         | Puebla               |    1346176 |
+| 2519 | Nezahualcóyotl              | MEX         | México               |    1224924 |
+| 2520 | Juárez                      | MEX         | Chihuahua            |    1217818 |
+| 2521 | Tijuana                     | MEX         | Baja California      |    1212232 |
+| 2522 | León                        | MEX         | Guanajuato           |    1133576 |
+| 2523 | Monterrey                   | MEX         | Nuevo León           |    1108499 |
+| 2524 | Zapopan                     | MEX         | Jalisco              |    1002239 |
+| 2525 | Naucalpan de Juárez         | MEX         | México               |     857511 |
+| 2526 | Mexicali                    | MEX         | Baja California      |     764902 |
+| 2527 | Culiacán                    | MEX         | Sinaloa              |     744859 |
+| 2528 | Acapulco de Juárez          | MEX         | Guerrero             |     721011 |
+| 2529 | Tlalnepantla de Baz         | MEX         | México               |     720755 |
+| 2530 | Mérida                      | MEX         | Yucatán              |     703324 |
+| 2531 | Chihuahua                   | MEX         | Chihuahua            |     670208 |
+| 2532 | San Luis Potosí             | MEX         | San Luis Potosí      |     669353 |
+| 2533 | Guadalupe                   | MEX         | Nuevo León           |     668780 |
+| 2534 | Toluca                      | MEX         | México               |     665617 |
+| 2535 | Aguascalientes              | MEX         | Aguascalientes       |     643360 |
+| 2536 | Querétaro                   | MEX         | Querétaro de Arteaga |     639839 |
+| 2537 | Morelia                     | MEX         | Michoacán de Ocampo  |     619958 |
+| 2538 | Hermosillo                  | MEX         | Sonora               |     608697 |
+| 2539 | Saltillo                    | MEX         | Coahuila de Zaragoza |     577352 |
+| 2540 | Torreón                     | MEX         | Coahuila de Zaragoza |     529093 |
+| 2541 | Centro (Villahermosa)       | MEX         | Tabasco              |     519873 |
+| 2542 | San Nicolás de los Garza    | MEX         | Nuevo León           |     495540 |
+| 2543 | Durango                     | MEX         | Durango              |     490524 |
+| 2544 | Chimalhuacán                | MEX         | México               |     490245 |
+| 2545 | Tlaquepaque                 | MEX         | Jalisco              |     475472 |
+| 2546 | Atizapán de Zaragoza        | MEX         | México               |     467262 |
+| 2547 | Veracruz                    | MEX         | Veracruz             |     457119 |
+| 2548 | Cuautitlán Izcalli          | MEX         | México               |     452976 |
+| 2549 | Irapuato                    | MEX         | Guanajuato           |     440039 |
+| 2550 | Tuxtla Gutiérrez            | MEX         | Chiapas              |     433544 |
+| 2551 | Tultitlán                   | MEX         | México               |     432411 |
+| 2552 | Reynosa                     | MEX         | Tamaulipas           |     419776 |
+| 2553 | Benito Juárez               | MEX         | Quintana Roo         |     419276 |
+| 2554 | Matamoros                   | MEX         | Tamaulipas           |     416428 |
+| 2555 | Xalapa                      | MEX         | Veracruz             |     390058 |
+| 2556 | Celaya                      | MEX         | Guanajuato           |     382140 |
+| 2557 | Mazatlán                    | MEX         | Sinaloa              |     380265 |
+| 2558 | Ensenada                    | MEX         | Baja California      |     369573 |
+| 2559 | Ahome                       | MEX         | Sinaloa              |     358663 |
+| 2560 | Cajeme                      | MEX         | Sonora               |     355679 |
+| 2561 | Cuernavaca                  | MEX         | Morelos              |     337966 |
+| 2562 | Tonalá                      | MEX         | Jalisco              |     336109 |
+| 2563 | Valle de Chalco Solidaridad | MEX         | México               |     323113 |
+| 2564 | Nuevo Laredo                | MEX         | Tamaulipas           |     310277 |
+| 2565 | Tepic                       | MEX         | Nayarit              |     305025 |
+| 2566 | Tampico                     | MEX         | Tamaulipas           |     294789 |
+| 2567 | Ixtapaluca                  | MEX         | México               |     293160 |
+| 2568 | Apodaca                     | MEX         | Nuevo León           |     282941 |
+| 2569 | Guasave                     | MEX         | Sinaloa              |     277201 |
+| 2570 | Gómez Palacio               | MEX         | Durango              |     272806 |
+| 2571 | Tapachula                   | MEX         | Chiapas              |     271141 |
+| 2572 | Nicolás Romero              | MEX         | México               |     269393 |
+| 2573 | Coatzacoalcos               | MEX         | Veracruz             |     267037 |
+| 2574 | Uruapan                     | MEX         | Michoacán de Ocampo  |     265211 |
+| 2575 | Victoria                    | MEX         | Tamaulipas           |     262686 |
+| 2576 | Oaxaca de Juárez            | MEX         | Oaxaca               |     256848 |
+| 2577 | Coacalco de Berriozábal     | MEX         | México               |     252270 |
+| 2578 | Pachuca de Soto             | MEX         | Hidalgo              |     244688 |
+| 2579 | General Escobedo            | MEX         | Nuevo León           |     232961 |
+| 2580 | Salamanca                   | MEX         | Guanajuato           |     226864 |
+| 2581 | Santa Catarina              | MEX         | Nuevo León           |     226573 |
+| 2582 | Tehuacán                    | MEX         | Puebla               |     225943 |
+| 2583 | Chalco                      | MEX         | México               |     222201 |
+| 2584 | Cárdenas                    | MEX         | Tabasco              |     216903 |
+| 2585 | Campeche                    | MEX         | Campeche             |     216735 |
+| 2586 | La Paz                      | MEX         | México               |     213045 |
+| 2587 | Othón P. Blanco (Chetumal)  | MEX         | Quintana Roo         |     208014 |
+| 2588 | Texcoco                     | MEX         | México               |     203681 |
+| 2589 | La Paz                      | MEX         | Baja California Sur  |     196708 |
+| 2590 | Metepec                     | MEX         | México               |     194265 |
+| 2591 | Monclova                    | MEX         | Coahuila de Zaragoza |     193657 |
+| 2592 | Huixquilucan                | MEX         | México               |     193156 |
+| 2593 | Chilpancingo de los Bravo   | MEX         | Guerrero             |     192509 |
+| 2594 | Puerto Vallarta             | MEX         | Jalisco              |     183741 |
+| 2595 | Fresnillo                   | MEX         | Zacatecas            |     182744 |
+| 2596 | Ciudad Madero               | MEX         | Tamaulipas           |     182012 |
+| 2597 | Soledad de Graciano Sánchez | MEX         | San Luis Potosí      |     179956 |
+| 2598 | San Juan del Río            | MEX         | Querétaro            |     179300 |
+| 2599 | San Felipe del Progreso     | MEX         | México               |     177330 |
+| 2600 | Córdoba                     | MEX         | Veracruz             |     176952 |
+| 2601 | Tecámac                     | MEX         | México               |     172410 |
+| 2602 | Ocosingo                    | MEX         | Chiapas              |     171495 |
+| 2603 | Carmen                      | MEX         | Campeche             |     171367 |
+| 2604 | Lázaro Cárdenas             | MEX         | Michoacán de Ocampo  |     170878 |
+| 2605 | Jiutepec                    | MEX         | Morelos              |     170428 |
+| 2606 | Papantla                    | MEX         | Veracruz             |     170123 |
+| 2607 | Comalcalco                  | MEX         | Tabasco              |     164640 |
+| 2608 | Zamora                      | MEX         | Michoacán de Ocampo  |     161191 |
+| 2609 | Nogales                     | MEX         | Sonora               |     159103 |
+| 2610 | Huimanguillo                | MEX         | Tabasco              |     158335 |
+| 2611 | Cuautla                     | MEX         | Morelos              |     153132 |
+| 2612 | Minatitlán                  | MEX         | Veracruz             |     152983 |
+| 2613 | Poza Rica de Hidalgo        | MEX         | Veracruz             |     152678 |
+| 2614 | Ciudad Valles               | MEX         | San Luis Potosí      |     146411 |
+| 2615 | Navolato                    | MEX         | Sinaloa              |     145396 |
+| 2616 | San Luis Río Colorado       | MEX         | Sonora               |     145276 |
+| 2617 | Pénjamo                     | MEX         | Guanajuato           |     143927 |
+| 2618 | San Andrés Tuxtla           | MEX         | Veracruz             |     142251 |
+| 2619 | Guanajuato                  | MEX         | Guanajuato           |     141215 |
+| 2620 | Navojoa                     | MEX         | Sonora               |     140495 |
+| 2621 | Zitácuaro                   | MEX         | Michoacán de Ocampo  |     137970 |
+| 2622 | Boca del Río                | MEX         | Veracruz-Llave       |     135721 |
+| 2623 | Allende                     | MEX         | Guanajuato           |     134645 |
+| 2624 | Silao                       | MEX         | Guanajuato           |     134037 |
+| 2625 | Macuspana                   | MEX         | Tabasco              |     133795 |
+| 2626 | San Juan Bautista Tuxtepec  | MEX         | Oaxaca               |     133675 |
+| 2627 | San Cristóbal de las Casas  | MEX         | Chiapas              |     132317 |
+| 2628 | Valle de Santiago           | MEX         | Guanajuato           |     130557 |
+| 2629 | Guaymas                     | MEX         | Sonora               |     130108 |
+| 2630 | Colima                      | MEX         | Colima               |     129454 |
+| 2631 | Dolores Hidalgo             | MEX         | Guanajuato           |     128675 |
+| 2632 | Lagos de Moreno             | MEX         | Jalisco              |     127949 |
+| 2633 | Piedras Negras              | MEX         | Coahuila de Zaragoza |     127898 |
+| 2634 | Altamira                    | MEX         | Tamaulipas           |     127490 |
+| 2635 | Túxpam                      | MEX         | Veracruz             |     126475 |
+| 2636 | San Pedro Garza García      | MEX         | Nuevo León           |     126147 |
+| 2637 | Cuauhtémoc                  | MEX         | Chihuahua            |     124279 |
+| 2638 | Manzanillo                  | MEX         | Colima               |     124014 |
+| 2639 | Iguala de la Independencia  | MEX         | Guerrero             |     123883 |
+| 2640 | Zacatecas                   | MEX         | Zacatecas            |     123700 |
+| 2641 | Tlajomulco de Zúñiga        | MEX         | Jalisco              |     123220 |
+| 2642 | Tulancingo de Bravo         | MEX         | Hidalgo              |     121946 |
+| 2643 | Zinacantepec                | MEX         | México               |     121715 |
+| 2644 | San Martín Texmelucan       | MEX         | Puebla               |     121093 |
+| 2645 | Tepatitlán de Morelos       | MEX         | Jalisco              |     118948 |
+| 2646 | Martínez de la Torre        | MEX         | Veracruz             |     118815 |
+| 2647 | Orizaba                     | MEX         | Veracruz             |     118488 |
+| 2648 | Apatzingán                  | MEX         | Michoacán de Ocampo  |     117849 |
+| 2649 | Atlixco                     | MEX         | Puebla               |     117019 |
+| 2650 | Delicias                    | MEX         | Chihuahua            |     116132 |
+| 2651 | Ixtlahuaca                  | MEX         | México               |     115548 |
+| 2652 | El Mante                    | MEX         | Tamaulipas           |     112453 |
+| 2653 | Lerdo                       | MEX         | Durango              |     112272 |
+| 2654 | Almoloya de Juárez          | MEX         | México               |     110550 |
+| 2655 | Acámbaro                    | MEX         | Guanajuato           |     110487 |
+| 2656 | Acuña                       | MEX         | Coahuila de Zaragoza |     110388 |
+| 2657 | Guadalupe                   | MEX         | Zacatecas            |     108881 |
+| 2658 | Huejutla de Reyes           | MEX         | Hidalgo              |     108017 |
+| 2659 | Hidalgo                     | MEX         | Michoacán de Ocampo  |     106198 |
+| 2660 | Los Cabos                   | MEX         | Baja California Sur  |     105199 |
+| 2661 | Comitán de Domínguez        | MEX         | Chiapas              |     104986 |
+| 2662 | Cunduacán                   | MEX         | Tabasco              |     104164 |
+| 2663 | Río Bravo                   | MEX         | Tamaulipas           |     103901 |
+| 2664 | Temapache                   | MEX         | Veracruz             |     102824 |
+| 2665 | Chilapa de Alvarez          | MEX         | Guerrero             |     102716 |
+| 2666 | Hidalgo del Parral          | MEX         | Chihuahua            |     100881 |
+| 2667 | San Francisco del Rincón    | MEX         | Guanajuato           |     100149 |
+| 2668 | Taxco de Alarcón            | MEX         | Guerrero             |      99907 |
+| 2669 | Zumpango                    | MEX         | México               |      99781 |
+| 2670 | San Pedro Cholula           | MEX         | Puebla               |      99734 |
+| 2671 | Lerma                       | MEX         | México               |      99714 |
+| 2672 | Tecomán                     | MEX         | Colima               |      99296 |
+| 2673 | Las Margaritas              | MEX         | Chiapas              |      97389 |
+| 2674 | Cosoleacaque                | MEX         | Veracruz             |      97199 |
+| 2675 | San Luis de la Paz          | MEX         | Guanajuato           |      96763 |
+| 2676 | José Azueta                 | MEX         | Guerrero             |      95448 |
+| 2677 | Santiago Ixcuintla          | MEX         | Nayarit              |      95311 |
+| 2678 | San Felipe                  | MEX         | Guanajuato           |      95305 |
+| 2679 | Tejupilco                   | MEX         | México               |      94934 |
+| 2680 | Tantoyuca                   | MEX         | Veracruz             |      94709 |
+| 2681 | Salvatierra                 | MEX         | Guanajuato           |      94322 |
+| 2682 | Tultepec                    | MEX         | México               |      93364 |
+| 2683 | Temixco                     | MEX         | Morelos              |      92686 |
+| 2684 | Matamoros                   | MEX         | Coahuila de Zaragoza |      91858 |
+| 2685 | Pánuco                      | MEX         | Veracruz             |      90551 |
+| 2686 | El Fuerte                   | MEX         | Sinaloa              |      89556 |
+| 2687 | Tierra Blanca               | MEX         | Veracruz             |      89143 |
++------+-----------------------------+-------------+----------------------+------------+
+173 rows in set (0.0074 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select  sum(amount) as total, customer_id from payment group by customer_id order by total desc limit 1;
+ERROR: 1146 (42S02): Table 'world.payment' doesn't exist
+ MySQL  localhost:3306 ssl  world  SQL > show tables;
++-----------------+
+| Tables_in_world |
++-----------------+
+| city            |
+| country         |
+| countrylanguage |
++-----------------+
+3 rows in set (0.0022 sec)
+ MySQL  localhost:3306 ssl  world  SQL > desc country lenguage;
+Empty set (0.0060 sec)
+ MySQL  localhost:3306 ssl  world  SQL > desc countrylenguage;
+ERROR: 1146 (42S02): Table 'world.countrylenguage' doesn't exist
+ MySQL  localhost:3306 ssl  world  SQL > select count(*) countrycode
+                                      -> from city
+                                      -> group by countrycode
+                                      ->
+                                      -> ^C
+ MySQL  localhost:3306 ssl  world  SQL > desc city;
++-------------+----------+------+-----+---------+----------------+
+| Field       | Type     | Null | Key | Default | Extra          |
++-------------+----------+------+-----+---------+----------------+
+| ID          | int      | NO   | PRI | NULL    | auto_increment |
+| Name        | char(35) | NO   |     |         |                |
+| CountryCode | char(3)  | NO   | MUL |         |                |
+| District    | char(20) | NO   |     |         |                |
+| Population  | int      | NO   |     | 0       |                |
++-------------+----------+------+-----+---------+----------------+
+5 rows in set (0.0026 sec)
+ MySQL  localhost:3306 ssl  world  SQL > selec sum(population) as total, countrycode
+                                      -> from city
+                                      -> group by countrycode
+                                      -> order by population;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selec sum(population) as total, countrycode
+from city
+group by countrycode
+order' at line 1
+ MySQL  localhost:3306 ssl  world  SQL > selec sum(population) as total, countrycode from city group by countrycode order by countrycode;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'selec sum(population) as total, countrycode from city group by countrycode order' at line 1
+ MySQL  localhost:3306 ssl  world  SQL > select sum(population) as total, countrycode from city group by countrycode order by countrycode;
++-----------+-------------+
+| total     | countrycode |
++-----------+-------------+
+|     29034 | ABW         |
+|   2332100 | AFG         |
+|   2561600 | AGO         |
+|      1556 | AIA         |
+|    270000 | ALB         |
+|     21189 | AND         |
+|      2345 | ANT         |
+|   1728336 | ARE         |
+|  19996563 | ARG         |
+|   1633100 | ARM         |
+|      7523 | ASM         |
+|     24000 | ATG         |
+|  11313666 | AUS         |
+|   2384273 | AUT         |
+|   2464000 | AZE         |
+|    300000 | BDI         |
+|   1609322 | BEL         |
+|    968503 | BEN         |
+|   1229000 | BFA         |
+|   8569906 | BGD         |
+|   2696915 | BGR         |
+|    148000 | BHR         |
+|    172000 | BHS         |
+|    599106 | BIH         |
+|   4741000 | BLR         |
+|     62915 | BLZ         |
+|      3000 | BMU         |
+|   3378644 | BOL         |
+|  85876862 | BRA         |
+|      6070 | BRB         |
+|     21484 | BRN         |
+|     22000 | BTN         |
+|    314822 | BWA         |
+|    524000 | CAF         |
+|  12673840 | CAN         |
+|       670 | CCK         |
+|    914200 | CHE         |
+|   9717970 | CHL         |
+| 175953614 | CHN         |
+|   3191137 | CIV         |
+|   3522554 | CMR         |
+|   9864615 | COD         |
+|   1450000 | COG         |
+|     11900 | COK         |
+|  20250990 | COL         |
+|     36000 | COM         |
+|     94800 | CPV         |
+|    339131 | CRI         |
+|   4629925 | CUB         |
+|       700 | CXR         |
+|     19600 | CYM         |
+|    349400 | CYP         |
+|   2634711 | CZE         |
+|  26245483 | DEU         |
+|    383000 | DJI         |
+|     16243 | DMA         |
+|   1215945 | DNK         |
+|   2438276 | DOM         |
+|   5192179 | DZA         |
+|   5744142 | ECU         |
+|  20083079 | EGY         |
+|    431000 | ERI         |
+|    169000 | ESH         |
+|  16669189 | ESP         |
+|    505227 | EST         |
+|   3190334 | ETH         |
+|   1532919 | FIN         |
+|     77366 | FJI         |
+|      1636 | FLK         |
+|   9244494 | FRA         |
+|     14542 | FRO         |
+|     30600 | FSM         |
+|    419000 | GAB         |
+|  22436673 | GBR         |
+|   1880900 | GEO         |
+|   1819889 | GHA         |
+|     27025 | GIB         |
+|   1090610 | GIN         |
+|     75380 | GLP         |
+|    144926 | GMB         |
+|    241000 | GNB         |
+|     40000 | GNQ         |
+|   1972843 | GRC         |
+|      4621 | GRD         |
+|     13445 | GRL         |
+|   1225188 | GTM         |
+|     50699 | GUF         |
+|     10639 | GUM         |
+|    254000 | GUY         |
+|   3300633 | HKG         |
+|   1287000 | HND         |
+|   1168883 | HRV         |
+|   1517338 | HTI         |
+|   2953310 | HUN         |
+|  37485695 | IDN         |
+| 123298526 | IND         |
+|    609041 | IRL         |
+|  26032990 | IRN         |
+|   8926041 | IRQ         |
+|    109184 | ISL         |
+|   2813000 | ISR         |
+|  15087019 | ITA         |
+|    314140 | JAM         |
+|   1847677 | JOR         |
+|  77965107 | JPN         |
+|   5484200 | KAZ         |
+|   3522793 | KEN         |
+|    812100 | KGZ         |
+|    805055 | KHM         |
+|      7281 | KIR         |
+|     11600 | KNA         |
+|  38999893 | KOR         |
+|    261252 | KWT         |
+|    628452 | LAO         |
+|   1340000 | LBN         |
+|    850000 | LBR         |
+|   2697007 | LBY         |
+|      2301 | LCA         |
+|     10389 | LIE         |
+|   1545000 | LKA         |
+|    297000 | LSO         |
+|   1473317 | LTU         |
+|     80700 | LUX         |
+|    968596 | LVA         |
+|    437500 | MAC         |
+|   8757562 | MAR         |
+|     14388 | MCO         |
+|   1193300 | MDA         |
+|   1123161 | MDG         |
+|     71000 | MDV         |
+|  59752521 | MEX         |
+|     28000 | MHL         |
+|    444299 | MKD         |
+|    809552 | MLI         |
+|     28518 | MLT         |
+|   6203000 | MMR         |
+|    773700 | MNG         |
+|      9200 | MNP         |
+|   3143145 | MOZ         |
+|    764900 | MRT         |
+|      2000 | MSR         |
+|     94050 | MTQ         |
+|    337280 | MUS         |
+|    914119 | MWI         |
+|   4605141 | MYS         |
+|     12000 | MYT         |
+|    169000 | NAM         |
+|     76293 | NCL         |
+|    653857 | NER         |
+|       800 | NFK         |
+|  17366900 | NGA         |
+|   1269223 | NIC         |
+|       682 | NIU         |
+|   5180049 | NLD         |
+|   1100028 | NOR         |
+|   1132403 | NPL         |
+|      4609 | NRU         |
+|   1847600 | NZL         |
+|    537096 | OMN         |
+|  31546745 | PAK         |
+|    786755 | PAN         |
+|        42 | PCN         |
+|  12147242 | PER         |
+|  30934791 | PHL         |
+|     12000 | PLW         |
+|    247000 | PNG         |
+|  11687431 | POL         |
+|   1564174 | PRI         |
+|   6476751 | PRK         |
+|   1145011 | PRT         |
+|   1020020 | PRY         |
+|    902360 | PSE         |
+|     51441 | PYF         |
+|    355000 | QAT         |
+|    131480 | REU         |
+|   7469006 | ROM         |
+|  69150700 | RUS         |
+|    286000 | RWA         |
+|  10636700 | SAU         |
+|   4752187 | SDN         |
+|   2770458 | SEN         |
+|   4017733 | SGP         |
+|      1500 | SHN         |
+|      1438 | SJM         |
+|     50100 | SLB         |
+|    850000 | SLE         |
+|   1138231 | SLV         |
+|      7096 | SMR         |
+|   1177000 | SOM         |
+|      5808 | SPM         |
+|     49541 | STP         |
+|    112000 | SUR         |
+|    784143 | SVK         |
+|    386518 | SVN         |
+|   2891431 | SWE         |
+|     61000 | SWZ         |
+|     41000 | SYC         |
+|   4477784 | SYR         |
+|      4800 | TCA         |
+|    630465 | TCD         |
+|    375000 | TGO         |
+|   7953161 | THA         |
+|    685500 | TJK         |
+|       300 | TKL         |
+|    972600 | TKM         |
+|     47900 | TMP         |
+|     22400 | TON         |
+|     99997 | TTO         |
+|   1798500 | TUN         |
+|  28327028 | TUR         |
+|      4600 | TUV         |
+|  13569336 | TWN         |
+|   2944034 | TZA         |
+|    890800 | UGA         |
+|  20074000 | UKR         |
+|   1236000 | URY         |
+|  78625774 | USA         |
+|   5183900 | UZB         |
+|       455 | VAT         |
+|     17100 | VCT         |
+|  12251091 | VEN         |
+|      8000 | VGB         |
+|     13000 | VIR         |
+|   9364813 | VNM         |
+|     33700 | VUT         |
+|      1137 | WLF         |
+|     35900 | WSM         |
+|   1743700 | YEM         |
+|   2189507 | YUG         |
+|  15196370 | ZAF         |
+|   2473500 | ZMB         |
+|   2730420 | ZWE         |
++-----------+-------------+
+232 rows in set (0.0311 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select sum(population) as total, countrycode from city group by countrycode order by population;
+ERROR: 1055 (42000): Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'world.city.Population' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+ MySQL  localhost:3306 ssl  world  SQL > select sum(population) as total, countrycode from city group by countrycode order by population;
+ERROR: 1055 (42000): Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'world.city.Population' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+ MySQL  localhost:3306 ssl  world  SQL > select sum(population) as total, countrycode from city group by countrycode order by total;
++-----------+-------------+
+| total     | countrycode |
++-----------+-------------+
+|        42 | PCN         |
+|       300 | TKL         |
+|       455 | VAT         |
+|       670 | CCK         |
+|       682 | NIU         |
+|       700 | CXR         |
+|       800 | NFK         |
+|      1137 | WLF         |
+|      1438 | SJM         |
+|      1500 | SHN         |
+|      1556 | AIA         |
+|      1636 | FLK         |
+|      2000 | MSR         |
+|      2301 | LCA         |
+|      2345 | ANT         |
+|      3000 | BMU         |
+|      4600 | TUV         |
+|      4609 | NRU         |
+|      4621 | GRD         |
+|      4800 | TCA         |
+|      5808 | SPM         |
+|      6070 | BRB         |
+|      7096 | SMR         |
+|      7281 | KIR         |
+|      7523 | ASM         |
+|      8000 | VGB         |
+|      9200 | MNP         |
+|     10389 | LIE         |
+|     10639 | GUM         |
+|     11600 | KNA         |
+|     11900 | COK         |
+|     12000 | MYT         |
+|     12000 | PLW         |
+|     13000 | VIR         |
+|     13445 | GRL         |
+|     14388 | MCO         |
+|     14542 | FRO         |
+|     16243 | DMA         |
+|     17100 | VCT         |
+|     19600 | CYM         |
+|     21189 | AND         |
+|     21484 | BRN         |
+|     22000 | BTN         |
+|     22400 | TON         |
+|     24000 | ATG         |
+|     27025 | GIB         |
+|     28000 | MHL         |
+|     28518 | MLT         |
+|     29034 | ABW         |
+|     30600 | FSM         |
+|     33700 | VUT         |
+|     35900 | WSM         |
+|     36000 | COM         |
+|     40000 | GNQ         |
+|     41000 | SYC         |
+|     47900 | TMP         |
+|     49541 | STP         |
+|     50100 | SLB         |
+|     50699 | GUF         |
+|     51441 | PYF         |
+|     61000 | SWZ         |
+|     62915 | BLZ         |
+|     71000 | MDV         |
+|     75380 | GLP         |
+|     76293 | NCL         |
+|     77366 | FJI         |
+|     80700 | LUX         |
+|     94050 | MTQ         |
+|     94800 | CPV         |
+|     99997 | TTO         |
+|    109184 | ISL         |
+|    112000 | SUR         |
+|    131480 | REU         |
+|    144926 | GMB         |
+|    148000 | BHR         |
+|    169000 | ESH         |
+|    169000 | NAM         |
+|    172000 | BHS         |
+|    241000 | GNB         |
+|    247000 | PNG         |
+|    254000 | GUY         |
+|    261252 | KWT         |
+|    270000 | ALB         |
+|    286000 | RWA         |
+|    297000 | LSO         |
+|    300000 | BDI         |
+|    314140 | JAM         |
+|    314822 | BWA         |
+|    337280 | MUS         |
+|    339131 | CRI         |
+|    349400 | CYP         |
+|    355000 | QAT         |
+|    375000 | TGO         |
+|    383000 | DJI         |
+|    386518 | SVN         |
+|    419000 | GAB         |
+|    431000 | ERI         |
+|    437500 | MAC         |
+|    444299 | MKD         |
+|    505227 | EST         |
+|    524000 | CAF         |
+|    537096 | OMN         |
+|    599106 | BIH         |
+|    609041 | IRL         |
+|    628452 | LAO         |
+|    630465 | TCD         |
+|    653857 | NER         |
+|    685500 | TJK         |
+|    764900 | MRT         |
+|    773700 | MNG         |
+|    784143 | SVK         |
+|    786755 | PAN         |
+|    805055 | KHM         |
+|    809552 | MLI         |
+|    812100 | KGZ         |
+|    850000 | LBR         |
+|    850000 | SLE         |
+|    890800 | UGA         |
+|    902360 | PSE         |
+|    914119 | MWI         |
+|    914200 | CHE         |
+|    968503 | BEN         |
+|    968596 | LVA         |
+|    972600 | TKM         |
+|   1020020 | PRY         |
+|   1090610 | GIN         |
+|   1100028 | NOR         |
+|   1123161 | MDG         |
+|   1132403 | NPL         |
+|   1138231 | SLV         |
+|   1145011 | PRT         |
+|   1168883 | HRV         |
+|   1177000 | SOM         |
+|   1193300 | MDA         |
+|   1215945 | DNK         |
+|   1225188 | GTM         |
+|   1229000 | BFA         |
+|   1236000 | URY         |
+|   1269223 | NIC         |
+|   1287000 | HND         |
+|   1340000 | LBN         |
+|   1450000 | COG         |
+|   1473317 | LTU         |
+|   1517338 | HTI         |
+|   1532919 | FIN         |
+|   1545000 | LKA         |
+|   1564174 | PRI         |
+|   1609322 | BEL         |
+|   1633100 | ARM         |
+|   1728336 | ARE         |
+|   1743700 | YEM         |
+|   1798500 | TUN         |
+|   1819889 | GHA         |
+|   1847600 | NZL         |
+|   1847677 | JOR         |
+|   1880900 | GEO         |
+|   1972843 | GRC         |
+|   2189507 | YUG         |
+|   2332100 | AFG         |
+|   2384273 | AUT         |
+|   2438276 | DOM         |
+|   2464000 | AZE         |
+|   2473500 | ZMB         |
+|   2561600 | AGO         |
+|   2634711 | CZE         |
+|   2696915 | BGR         |
+|   2697007 | LBY         |
+|   2730420 | ZWE         |
+|   2770458 | SEN         |
+|   2813000 | ISR         |
+|   2891431 | SWE         |
+|   2944034 | TZA         |
+|   2953310 | HUN         |
+|   3143145 | MOZ         |
+|   3190334 | ETH         |
+|   3191137 | CIV         |
+|   3300633 | HKG         |
+|   3378644 | BOL         |
+|   3522554 | CMR         |
+|   3522793 | KEN         |
+|   4017733 | SGP         |
+|   4477784 | SYR         |
+|   4605141 | MYS         |
+|   4629925 | CUB         |
+|   4741000 | BLR         |
+|   4752187 | SDN         |
+|   5180049 | NLD         |
+|   5183900 | UZB         |
+|   5192179 | DZA         |
+|   5484200 | KAZ         |
+|   5744142 | ECU         |
+|   6203000 | MMR         |
+|   6476751 | PRK         |
+|   7469006 | ROM         |
+|   7953161 | THA         |
+|   8569906 | BGD         |
+|   8757562 | MAR         |
+|   8926041 | IRQ         |
+|   9244494 | FRA         |
+|   9364813 | VNM         |
+|   9717970 | CHL         |
+|   9864615 | COD         |
+|  10636700 | SAU         |
+|  11313666 | AUS         |
+|  11687431 | POL         |
+|  12147242 | PER         |
+|  12251091 | VEN         |
+|  12673840 | CAN         |
+|  13569336 | TWN         |
+|  15087019 | ITA         |
+|  15196370 | ZAF         |
+|  16669189 | ESP         |
+|  17366900 | NGA         |
+|  19996563 | ARG         |
+|  20074000 | UKR         |
+|  20083079 | EGY         |
+|  20250990 | COL         |
+|  22436673 | GBR         |
+|  26032990 | IRN         |
+|  26245483 | DEU         |
+|  28327028 | TUR         |
+|  30934791 | PHL         |
+|  31546745 | PAK         |
+|  37485695 | IDN         |
+|  38999893 | KOR         |
+|  59752521 | MEX         |
+|  69150700 | RUS         |
+|  77965107 | JPN         |
+|  78625774 | USA         |
+|  85876862 | BRA         |
+| 123298526 | IND         |
+| 175953614 | CHN         |
++-----------+-------------+
+232 rows in set (0.0121 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select sum(population) as total, countrycode from city group by countrycode having total = 1 order by total;
+Empty set (0.0158 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select sum(population) as total, countrycode from city group by countrycode having total = 1;
+Empty set (0.0105 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select sum(population) as total, countrycode from city group by countrycode having total = 1 order by countrycode;
+Empty set (0.0111 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select sum(population) as total, countrycode from city group by countrycode having total = 1 order by total;
+Empty set (0.0099 sec)
+ MySQL  localhost:3306 ssl  world  SQL >
+ MySQL  localhost:3306 ssl  world  SQL >
+ MySQL  localhost:3306 ssl  world  SQL > ^C
+ MySQL  localhost:3306 ssl  world  SQL >
+ MySQL  localhost:3306 ssl  world  SQL > select sum(population) as total, countrycode from city group by countrycode having total = 1 order by total;
+Empty set (0.0097 sec)
+ MySQL  localhost:3306 ssl  world  SQL > select sum(population) as total, countrycode from city group by countrycode having total = 1000000 order by total;
+Empty set (0.0094 sec)
+ MySQL  localhost:3306 ssl  world  SQL >
